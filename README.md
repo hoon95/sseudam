@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# 쓰담 - 유기동물 매칭 플랫폼
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+유기견 입양을 원하는 사람들과 보호소를 연결해주는 매칭 플랫폼
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **🔎 기획 의도**
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+> **문제점**
+> 
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### **🐈 반려동물 천만 시대! 이제는 ‘가족’이다**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1️⃣ **낮은 입양률** : 동물보호센터에서 1년에 약 1,300마리의 반려동물을 보호하지만 입양 비율은 30%가량 뿐이며, 그마저도 어리고 작은 강아지 위주로 입양됨
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+**2️⃣ 책임감 부족** : 1인 가구의 증가에 따른 반려동물이 증가하고 있지만, 그에 따른 건강과 안전을 위한 책임감을 충분히 갖지 못하는 경우가 많음. 이로 인해 동물이 버려지거나 방치되는 일이 발생
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+**3️⃣ 진입장벽** : 입양을 위해 상세한 서류 작성, 소득 증빙, 양육 환경 검증 등 복잡한 과정을 거쳐야 하는 경우가 많아 큰 걸림돌이 됨
+
+<br />
+
+> **기대 효과**
+> 
+
+### 입양률 증가
+
+- TAIL : 사용자의 흥미를 유도할만한 컨텐츠를 통해 호응을 유도하고, 성향을 미리 파악하여 만족도를 높여 결과적으로 입양률을 증가시킬 수 있음
+
+### 인식 제고 및 소통 활성화
+
+- 많은 사람들이 공감할 만한 주제로 입양에 대한 인식을 개선하고, 슬로건 제시
+- 후기 공유 : 입양을 경험한 사람들의 후기를 통해 새로운 입양자들에게 긍정적인 영향을 미칠 수 있음
+
+### 사회적 책임 실현
+
+- 유기동물 문제를 해결하는 데 기여하며 나아가 사회적 책임을 다하는 플랫폼
+- 사용자가 적극적으로 참여하고, 보다 많은 사람들이 유기동물 입양을 고려하게 되는 계기를 마련
