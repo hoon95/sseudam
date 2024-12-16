@@ -1,3 +1,4 @@
+import { loginWithKakao } from "../../services/auth";
 import { LoginContainer, KakaoIcon } from "./Login.styled";
 import { Sns } from "./Login.styled";
 import { Link } from "react-router-dom";
@@ -5,6 +6,16 @@ import { Link } from "react-router-dom";
 // Icon Load
 import InstagramIcon from "@mui/icons-material/Instagram";
 import GoogleIcon from "@mui/icons-material/Google";
+
+const KakaoLogin = async () => {
+  try {
+    await loginWithKakao();
+    alert('Success');
+  } catch (err: any) {
+    console.error(err.message);
+    alert('Failed to Login');
+  }
+}
 
 export const Login = () => {
   return (
@@ -14,7 +25,7 @@ export const Login = () => {
         <p>쓰담에서 시작하세요</p>
       </div>
       <Sns>
-        <button className="kakao">
+        <button className="kakao" onClick={ KakaoLogin }>
           <KakaoIcon />
           카카오로 시작하기
         </button>
