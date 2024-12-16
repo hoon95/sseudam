@@ -1,0 +1,9 @@
+{
+  "tabWidth": 2,
+  "semi": true,
+  
+  "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+  ]
+}
