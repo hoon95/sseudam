@@ -21,18 +21,25 @@ export const GlobalStyle = () => (
         --gray: #b6b1a7;
       }
 
+      
       @font-face {
         font-family: 'Moneygraphy-Rounded';
         src: url(${MoneygraphyWoff2}) format("woff2"),
-             url(${MoneygraphyWoff}) format("woff");
+        url(${MoneygraphyWoff}) format("woff");
         font-weight: regular;
       }
-
+      
+      /* common */
       body {
         font-family: 'Moneygraphy-Rounded', sans-serif;
         color: #333333;
         background-color: #ffffff;
         margin: 0;
+        padding-top: calc(var(--gap) * 3);
+      }
+
+      a {
+        text-decoration: none;
       }
     `}
   />

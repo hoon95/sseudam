@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -28,7 +29,29 @@ export const Header = (props: Props) => {
       <HideOnScroll {...props}>
         <AppBar sx={{ bgcolor: 'var(--light)' }}>
           <Toolbar>
-            <p className='logo'>쓰담</p>
+            <section className='box'>
+              <h1>
+                <NavLink to='/' className="logo">쓰담</NavLink>
+              </h1>
+              <ul>
+                <li>
+                  <NavLink to="/search" className={({ isActive }) => (isActive ? "active" : "")}>
+                    반려동물 찾기
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/share" className={({ isActive }) => (isActive ? "active" : "")}>
+                    일상 공유
+                  </NavLink>
+                </li>
+                <li className="login">
+                  <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : "")}>
+                    로그인/회원가입
+                  </NavLink>
+                </li>
+              </ul>
+            </section>
+
           </Toolbar>
         </AppBar>
       </HideOnScroll>
