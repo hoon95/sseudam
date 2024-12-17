@@ -29,7 +29,8 @@ const HideOnScroll = (props: Props) => {
 };
 
 const HeaderList = () => {
-  const { user, profile, username, recent, setUserData } = useUserStore();
+  const { userLogin, profile, username, setUserData, setRecentSns } =
+    useUserStore();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,11 +39,11 @@ const HeaderList = () => {
 
         if (user) {
           setUserData(
-            user,
+            true,
             user.user_metadata?.avatar_url,
             user.user_metadata?.full_name,
-            user.app_metadata?.provider,
           );
+          setRecentSns(user.app_metadata?.provider);
         }
       } catch (err) {
         console.error(err);
@@ -50,12 +51,12 @@ const HeaderList = () => {
     };
 
     fetchUser();
-  }, [setUserData]);
+  }, [setUserData, setRecentSns]);
 
   const handleLogout = async () => {
     try {
+      useUserStore.getState().setUserData(false, null, null);
       await logout();
-      useUserStore.getState().setUserData(null, null, null, null);
     } catch (err) {
       console.error(err);
     }
@@ -80,7 +81,7 @@ const HeaderList = () => {
         </NavLink>
       </li>
       <li className="login">
-        {user ? (
+        {userLogin ? (
           <>
             <Avatar src={profile ?? undefined} alt="사용자 프로필사진" />
             <p>{username} 님</p>
@@ -92,7 +93,6 @@ const HeaderList = () => {
           <NavLink
             to="/login"
             className={({ isActive }) => (isActive ? "active" : "")}
-            onClick={getCurrentUser}
           >
             로그인/회원가입
           </NavLink>

@@ -1,3 +1,4 @@
+import { useUserStore } from "../../Store/Store";
 import { loginWithGoogle, loginWithKakao } from "../../services/auth";
 import { LoginContainer, KakaoIcon } from "./Login.styled";
 import { Sns } from "./Login.styled";
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 // Icon Load
 import InstagramIcon from "@mui/icons-material/Instagram";
 import GoogleIcon from "@mui/icons-material/Google";
+import { Tooltip } from "@mui/material";
 
 const SnsLogin = async (sns: string) => {
   try {
@@ -24,6 +26,8 @@ const SnsLogin = async (sns: string) => {
 };
 
 export const Login = () => {
+  const { recentSns } = useUserStore();
+
   return (
     <LoginContainer>
       <div className="text">
@@ -31,18 +35,44 @@ export const Login = () => {
         <p>쓰담에서 시작하세요</p>
       </div>
       <Sns>
-        <button className="kakao" onClick={() => SnsLogin("kakao")}>
-          <KakaoIcon />
-          카카오로 시작하기
-        </button>
-        <button className="instagram">
-          <InstagramIcon />
-          인스타로 시작하기
-        </button>
-        <button className="google" onClick={() => SnsLogin("google")}>
-          <GoogleIcon />
-          구글로 시작하기
-        </button>
+        <Tooltip
+          className="kakao"
+          title={recentSns === "kakao" ? "최근 접속한 계정" : null}
+          open={true}
+          arrow={true}
+          placement="right"
+          onClick={() => SnsLogin("kakao")}
+        >
+          <div>
+            <KakaoIcon />
+            카카오로 시작하기
+          </div>
+        </Tooltip>
+        <Tooltip
+          className="instagram"
+          title={recentSns === "instagram" ? "최근 접속한 계정" : null}
+          open={true}
+          arrow={true}
+          placement="right"
+        >
+          <div>
+            <InstagramIcon />
+            인스타로 시작하기
+          </div>
+        </Tooltip>
+        <Tooltip
+          className="google"
+          title={recentSns === "google" ? "최근 접속한 계정" : null}
+          open={true}
+          arrow={true}
+          placement="right"
+          onClick={() => SnsLogin("google")}
+        >
+          <div>
+            <GoogleIcon />
+            구글로 시작하기
+          </div>
+        </Tooltip>
       </Sns>
 
       <div className="admin">

@@ -1,28 +1,39 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface UserState {
-  user: string | null;
+  userLogin: boolean;
   profile: string | null;
   username: string | null;
-  recent: string | null;
+  recentSns: string | null;
   setUserData: (
-    user: string | null,
+    userLogin: boolean,
     profile: string | null,
     username: string | null,
-    recent: string | null,
   ) => void;
+  setRecentSns: (recentSns: string | undefined) => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  user: null,
-  profile: null,
-  username: null,
-  recent: null,
-  setUserData: (user, profile, username, recent) =>
-    set(() => ({
-      user,
-      profile,
-      username,
-      recent,
-    })),
-}));
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      userLogin: false,
+      profile: null,
+      username: null,
+      recentSns: null,
+      setUserData: (userLogin, profile, username) =>
+        set(() => ({
+          userLogin,
+          profile,
+          username,
+        })),
+      setRecentSns: (recentSns) => set(() => ({ recentSns })),
+    }),
+    {
+      name: "recent-sns-storage",
+      partialize: (state) => ({
+        recentSns: state.recentSns,
+      }),
+    },
+  ),
+);

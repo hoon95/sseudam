@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
 
 export const Sns = styled.section`
-  width: 20vw;
+  width: 25vw;
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 0.5);
   padding-top: calc(var(--gap) * 5);
 
-  button {
+  & .kakao,
+  .instagram,
+  .google {
     display: flex;
     justify-content: center;
     align-items: center;

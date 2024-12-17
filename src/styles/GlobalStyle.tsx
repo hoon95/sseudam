@@ -1,7 +1,7 @@
-import { Global, css } from '@emotion/react';
-import emotionReset from 'emotion-reset';
-import MoneygraphyWoff from '../assets/fonts/Moneygraphy-Rounded.woff';
-import MoneygraphyWoff2 from '../assets/fonts/Moneygraphy-Rounded.woff2';
+import { Global, css } from "@emotion/react";
+import emotionReset from "emotion-reset";
+import MoneygraphyWoff from "../assets/fonts/Moneygraphy-Rounded.woff";
+import MoneygraphyWoff2 from "../assets/fonts/Moneygraphy-Rounded.woff2";
 
 export const GlobalStyle = () => (
   <Global
@@ -21,17 +21,17 @@ export const GlobalStyle = () => (
         --gray: #b6b1a7;
       }
 
-      
       @font-face {
-        font-family: 'Moneygraphy-Rounded';
-        src: url(${MoneygraphyWoff2}) format("woff2"),
-        url(${MoneygraphyWoff}) format("woff");
+        font-family: "Moneygraphy-Rounded";
+        src:
+          url(${MoneygraphyWoff2}) format("woff2"),
+          url(${MoneygraphyWoff}) format("woff");
         font-weight: regular;
       }
-      
+
       /* common */
       body {
-        font-family: 'Moneygraphy-Rounded', sans-serif;
+        font-family: "Moneygraphy-Rounded", sans-serif;
         color: #333333;
         background-color: #ffffff;
         margin: 0;
@@ -40,6 +40,15 @@ export const GlobalStyle = () => (
 
       a {
         text-decoration: none;
+      }
+
+      /* Login - Tooltip */
+      & .MuiTooltip-tooltip {
+        background: var(--main) !important;
+        padding: calc(var(--gap) * 0.5) !important;
+      }
+      & .MuiTooltip-arrow {
+        color: var(--main) !important;
       }
     `}
   />
