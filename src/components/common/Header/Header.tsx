@@ -94,7 +94,7 @@ const HeaderList = () => {
             to="/login"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
-            로그인/회원가입
+            로그인&가입하기
           </NavLink>
         )}
       </li>
