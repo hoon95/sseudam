@@ -5,3 +5,5 @@ declare module "@store*";
 declare module "@apis*";
 declare module "@services*";
 declare module "@utils*";
+
+declare module "aos";

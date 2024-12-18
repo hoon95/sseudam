@@ -36,9 +36,11 @@ export const GlobalStyle = () => (
         background-color: #ffffff;
         margin: 0;
         padding-top: calc(var(--gap) * 3);
+        overflow-x: hidden; // aos
       }
 
       a {
+        color: var(--dark);
         text-decoration: none;
       }
 

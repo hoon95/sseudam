@@ -1,14 +1,12 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#ff7336'
+      main: "#ff7000",
     },
   },
   typography: {
-    fontFamily: [
-      'Moneygraphy-Rounded',
-    ].join(',')
-  }
+    fontFamily: ["Moneygraphy-Rounded"].join(","),
+  },
 });
