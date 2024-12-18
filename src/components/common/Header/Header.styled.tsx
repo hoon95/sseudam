@@ -3,9 +3,11 @@ import styled from "@emotion/styled";
 export const HeaderContainer = styled.header`
   & .box {
     width: 100%;
+    max-width: 1280px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: auto;
 
     & .logo {
       color: var(--main);
