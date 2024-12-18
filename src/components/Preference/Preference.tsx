@@ -1,6 +1,6 @@
 import Typewriter from "typewriter-effect";
+import { ButtonModal } from "@components/Modal/Modal";
 import { Container, Thumbnail, Cursor, Prefer } from "./Preference.styled";
-import { Button } from "@mui/material";
 import thumbnail from "@assets/images/home/thumbnail.png";
 
 export const Preference = () => {
@@ -32,7 +32,7 @@ export const Preference = () => {
 
           <p>나에게 맞는 반려동물을 AI가 추천해줄게요</p>
         </Cursor>
-        <Button className="startBtn">시작하기</Button>
+        <ButtonModal />
       </Prefer>
     </Container>
   );

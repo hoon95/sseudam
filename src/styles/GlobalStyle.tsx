@@ -1,7 +1,7 @@
 import { Global, css } from "@emotion/react";
 import emotionReset from "emotion-reset";
-import MoneygraphyWoff from "../assets/fonts/Moneygraphy-Rounded.woff";
-import MoneygraphyWoff2 from "../assets/fonts/Moneygraphy-Rounded.woff2";
+import MoneygraphyWoff from "@assets/fonts/Moneygraphy-Rounded.woff";
+import MoneygraphyWoff2 from "@assets/fonts/Moneygraphy-Rounded.woff2";
 
 export const GlobalStyle = () => (
   <Global

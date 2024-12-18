@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useUserStore } from "../../../Store/Store";
-import { logout } from "../../../services/auth";
-import { getCurrentUser } from "../../../services/auth";
+import { useUserStore } from "@store/store";
+import { logout } from "@services/auth";
+import { getCurrentUser } from "@services/auth";
 import { Avatar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
