@@ -15,8 +15,8 @@ export const GlobalStyle = () => (
 
         --gap: 1.5rem;
 
-        --main: #ff7336;
-        --light: #fff;
+        --main: #ff7000;
+        --light: #ffffff;
         --dark: #231f1d;
         --gray: #b6b1a7;
       }

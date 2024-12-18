@@ -2,10 +2,11 @@ import { Box, Typography, Button } from "@mui/material";
 import { Progress } from "./Progress";
 import { useModalStore } from "@store/Store";
 import { InnerStyle } from "./Inner.styled";
+import testImg from "@assets/images/home/test.png";
 
 export const Inner = () => {
   const {
-    age,
+    animal,
     quizStart,
     setQuizStart,
     currentQuestion,
@@ -29,11 +30,13 @@ export const Inner = () => {
         <Typography id="modal-modal-title" variant="h6" component="h2">
           나에게 맞는 반려동물을 AI가 추천해줄게요!
         </Typography>
+        <img src={testImg} alt="취향 테스트 이미지" />
         <Button
+          sx={{ color: "var(--light)" }}
           variant="contained"
           onClick={() => {
             setQuizStart(false);
-            setFinalResult(age);
+            setFinalResult(animal);
           }}
         >
           START
@@ -47,17 +50,19 @@ export const Inner = () => {
         <Typography id="modal-modal-title" variant="h6" component="h2">
           {qna[currentQuestion]?.question}
         </Typography>
-        <Box sx={{ mt: 2 }}>
-          {qna[currentQuestion]?.answers.map((answer, index) => (
-            <Button
-              key={index}
-              variant="outlined"
-              onClick={() => handleNextQuestion(answer.weight)}
-              className="answerBtn"
-            >
-              {answer.text}
-            </Button>
-          ))}
+        <Box sx={{ mt: 2 }} className="answer">
+          {qna[currentQuestion]?.answers.map(
+            (answer: { text: string; weight: number }, index: number) => (
+              <Button
+                key={index}
+                variant="outlined"
+                onClick={() => handleNextQuestion(answer.weight)}
+                className="answerBtn"
+              >
+                {answer.text}
+              </Button>
+            ),
+          )}
         </Box>
         <Progress />
       </>
