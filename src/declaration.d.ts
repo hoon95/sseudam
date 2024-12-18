@@ -1,5 +1,4 @@
 declare module "@styles*";
-declare module "@store/*";
 declare module "@components/*";
 declare module "@pages*";
 declare module "@store*";

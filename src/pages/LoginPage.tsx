@@ -1,5 +1,5 @@
 import { Login } from "@components/Login/Login";
-import { useUserStore } from "@store/store";
+import { useUserStore } from "@store/Store";
 
 export const LoginPage = () => {
   const { userLogin } = useUserStore();

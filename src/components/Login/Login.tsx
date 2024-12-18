@@ -1,4 +1,4 @@
-import { useUserStore } from "@store/store";
+import { useUserStore } from "@store/Store";
 import { loginWithGoogle, loginWithKakao } from "@services/auth";
 import { LoginContainer, KakaoIcon } from "./Login.styled";
 import { Sns } from "./Login.styled";
