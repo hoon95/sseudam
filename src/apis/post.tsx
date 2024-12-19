@@ -1,10 +1,9 @@
-// import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@utils/supabaseClient";
 
 // Supabase Database 조회
-export const fetchPetData = async () => {
+export const fetchData = async (table: string) => {
   try {
-    const { data, error } = await supabase.from("list").select("*");
+    const { data, error } = await supabase.from(table).select("*");
     if (error) {
       throw new Error(error.message);
     }

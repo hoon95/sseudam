@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchPetData } from "@apis/post";
+import { fetchData } from "@apis/post";
 
 interface PetType {
   desertion_no: number;
@@ -29,8 +29,8 @@ interface PetType {
 
 export const Search = () => {
   const { data, isLoading, error } = useQuery<PetType[]>({
-    queryKey: ["petData"],
-    queryFn: fetchPetData,
+    queryKey: ["petData", "list"],
+    queryFn: ({ queryKey }) => fetchData(queryKey[1]),
   });
 
   if (isLoading) {
