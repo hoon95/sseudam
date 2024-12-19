@@ -18,11 +18,11 @@ export const Find = (props: FindProps) => {
         </p>
       </div>
       <Kind>
-        <Link to="./find" className="dog">
+        <Link to="./search?type=dog" className="dog">
           <Avatar src={dogImage} className="avatar" />
           <p>강아지</p>
         </Link>
-        <Link to="./find" className="cat">
+        <Link to="./search?type=cat" className="cat">
           <Avatar src={catImage} className="avatar" />
           <p>고양이</p>
         </Link>

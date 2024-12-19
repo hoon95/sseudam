@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchData } from "@apis/post";
-import { PetType } from "../../store/interface"; // ??
+import { fetchData } from "@apis/supabase";
+import { useLocation } from "react-router-dom";
+// import { petList } from "@apis/pet";
 import { Banner, Filter, Container } from "./Search.styled";
 import {
   Card,
@@ -13,7 +15,40 @@ import {
   Avatar,
 } from "@mui/material";
 
+export interface PetType {
+  desertion_no: number;
+  filename: string;
+  happen_dt: number;
+  happen_place: string;
+  kind_cd: string;
+  color_cd: string;
+  age: string;
+  weight: string;
+  notice_no: string;
+  notice_sdt: number;
+  notice_edt: number;
+  popfile: string;
+  process_state: string;
+  sex_cd: string;
+  neuter_yn: string;
+  special_mark: string;
+  care_nm: string;
+  care_tel: string;
+  care_addr: string;
+  org_nm: string;
+  charge_nm: string;
+  officetel: string;
+  notice_comment: string;
+}
+
 export const Search = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    //   petList();
+  }, [location]);
+
   const { data, isLoading, error } = useQuery<PetType[]>({
     queryKey: ["petData", "list"],
     queryFn: ({ queryKey }) => fetchData(queryKey[1]),
@@ -37,6 +72,7 @@ export const Search = () => {
     { src: `${categoryPath}/dog2.png`, name: "그레이 하운드" },
     { src: `${categoryPath}/dog3.png`, name: "그레이트 덴" },
   ];
+
   return (
     <>
       <Banner>
