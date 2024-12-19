@@ -17,6 +17,7 @@
     "@supabase/supabase-js": "^2.47.3",
     "@tanstack/react-query": "^5.62.7",
     "aos": "^2.3.4",
+    "axios": "^1.7.9",
     "emotion-reset": "^3.0.1",
     "npm": "^10.9.2",
     "react": "^18.3.1",

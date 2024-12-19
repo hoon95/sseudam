@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
-import { Container, Kind } from "./Find.styled";
 import dogImage from "@assets/images/home/dog.png";
 import catImage from "@assets/images/home/cat.png";
+import { Container, Kind } from "./Find.styled";
 
 interface FindProps {
   "data-aos"?: string;

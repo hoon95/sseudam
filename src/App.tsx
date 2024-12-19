@@ -5,18 +5,23 @@ import { SharePage } from "@pages/SharePage";
 import { LoginPage } from "@pages/LoginPage";
 import { Header } from "@components/common/Header/Header";
 import { GlobalStyle } from "@styles/GlobalStyle";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export const App = () => {
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/search" element={<SearchPage />}></Route>
-        <Route path="/share" element={<SharePage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-      </Routes>
-      <Header />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/search" element={<SearchPage />}></Route>
+          <Route path="/share" element={<SharePage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+        </Routes>
+        <Header />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };

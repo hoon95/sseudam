@@ -73,6 +73,7 @@ export const Inner = () => {
       <>
         <p>내 취향은...</p>
         <p>{finalResult}</p>
+        <div>카카오톡으로 공유하기</div>
       </>
     );
   };
