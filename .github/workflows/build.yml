@@ -13,7 +13,7 @@ jobs:
     name: Build and Test Frontend
     runs-on: ubuntu-latest
 
-    steps:\
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install
