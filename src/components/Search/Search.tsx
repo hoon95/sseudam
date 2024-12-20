@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@apis/supabase";
 import { useLocation } from "react-router-dom";
 // import { petList } from "@apis/pet";
+import { usePaginationStore } from "@store/store";
 import { Banner, Filter, Container } from "./Search.styled";
 import {
   Card,
@@ -13,6 +14,10 @@ import {
   Select,
   MenuItem,
   Avatar,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Pagination,
 } from "@mui/material";
 
 export interface PetType {
@@ -43,15 +48,27 @@ export interface PetType {
 
 export const Search = () => {
   const location = useLocation();
+  const { type, setType, page, setPage } = usePaginationStore();
+
+  const handleType = (event: ChangeEvent<HTMLInputElement>, type: string) => {
+    const checked = event.target.checked;
+    if (checked) {
+      setType(type);
+    }
+  };
+
+  const handlePage = (event: ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     //   petList();
-  }, [location]);
+  }, [location, page]);
 
   const { data, isLoading, error } = useQuery<PetType[]>({
-    queryKey: ["petData", "list"],
-    queryFn: ({ queryKey }) => fetchData(queryKey[1]),
+    queryKey: ["petData", "list", type, page],
+    queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
   });
 
   if (isLoading) {
@@ -66,11 +83,13 @@ export const Search = () => {
     return <p>No data available</p>;
   }
 
+  // const totalPage = Math.ceil(data.length / 5);
+
   const categoryPath = "/src/assets/images/search/category";
   const dogList = [
-    { src: `${categoryPath}/dog1.png`, name: "골든 리트리버" },
-    { src: `${categoryPath}/dog2.png`, name: "그레이 하운드" },
-    { src: `${categoryPath}/dog3.png`, name: "그레이트 덴" },
+    { src: `${categoryPath}/dog1.png`, name: "골든 리트리버", value: "dog1" },
+    { src: `${categoryPath}/dog2.png`, name: "그레이 하운드", value: "dog2" },
+    { src: `${categoryPath}/dog3.png`, name: "그레이트 덴", value: "dog3" },
   ];
 
   return (
@@ -81,12 +100,28 @@ export const Search = () => {
       <Container>
         <Filter>
           <h3>종류</h3>
-          <div className="category">
-            <input type="checkbox" id="dog" />
-            <label htmlFor="dog">강아지</label>
-            <input type="checkbox" id="cat" />
-            <label htmlFor="cat">고양이</label>
-          </div>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="dog"
+                  checked={type === "dog" ? true : false}
+                  onChange={(e) => handleType(e, "dog")}
+                />
+              }
+              label="강아지"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="cat"
+                  checked={type === "cat" ? true : false}
+                  onChange={(e) => handleType(e, "cat")}
+                />
+              }
+              label="고양이"
+            />
+          </FormGroup>
           <FormControl>
             <InputLabel id="dogType">견종</InputLabel>
             <Select
@@ -99,7 +134,7 @@ export const Search = () => {
                 <em>견종을 선택하세요</em>
               </MenuItem>
               {dogList.map((item, index) => (
-                <MenuItem value={`dog${index}`} key={index}>
+                <MenuItem value={item.value} key={index}>
                   <Avatar
                     src={item.src}
                     alt={`dog${index}`}
@@ -148,6 +183,15 @@ export const Search = () => {
           ))}
         </div>
       </Container>
+      <Pagination
+        count={5}
+        onChange={handlePage}
+        sx={{
+          width: "20vw",
+          margin: "auto",
+          padding: "calc(var(--gap) * 3) 0",
+        }}
+      />
     </>
   );
 };

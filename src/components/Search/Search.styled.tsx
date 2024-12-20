@@ -39,12 +39,6 @@ export const Filter = styled.aside`
     font-size: var(--text-md);
   }
 
-  & .category {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--gap) * 0.5);
-  }
-
   /* select box */
   & .MuiSelect-select {
     display: flex;

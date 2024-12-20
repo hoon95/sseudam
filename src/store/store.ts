@@ -34,6 +34,17 @@ interface ModalState {
   finalResult: string;
   resetModal: () => void;
 }
+
+interface PaginationState {
+  page: number;
+  setPage: (page: number) => void;
+}
+
+interface FilterState {
+  type: string;
+  setType: (type: string) => void;
+}
+
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
@@ -108,4 +119,14 @@ export const useModalStore = create<ModalState>((set) => ({
       animal: 0,
       finalResult: "",
     }),
+}));
+
+export const usePaginationStore = create<PaginationState>((set) => ({
+  page: 1,
+  setPage: (page) => set({ page }),
+}));
+
+export const useFilterStore = create<FilterState>((set) => ({
+  type: "dog",
+  setType: (type) => set({ type }),
 }));

@@ -52,6 +52,10 @@ export const GlobalStyle = () => (
       & .MuiTooltip-arrow {
         color: var(--main) !important;
       }
+
+      & .MuiPagination-ul {
+        justify-content: center;
+      }
     `}
   />
 );
