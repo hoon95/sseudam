@@ -1,6 +1,6 @@
 import { Modal, Button } from "@mui/material";
 import { Inner } from "./Inner/Inner";
-import { useModalStore } from "@store/Store";
+import { useModalStore } from "@store/store";
 import { Btn } from "./Modal.styled";
 
 export const ButtonModal = () => {

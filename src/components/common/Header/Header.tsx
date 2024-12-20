@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useUserStore } from "@store/Store";
+import { useUserStore } from "@store/store";
 import { logout } from "@services/auth";
 import { getCurrentUser } from "@services/auth";
 import { Avatar } from "@mui/material";

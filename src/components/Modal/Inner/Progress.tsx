@@ -1,5 +1,5 @@
 import { Box, LinearProgress } from "@mui/material";
-import { useModalProgress } from "@store/Store";
+import { useModalProgress } from "@store/store";
 
 export const Progress = () => {
   const progress = useModalProgress();

@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
 import { Progress } from "./Progress";
-import { useModalStore } from "@store/Store";
+import { useModalStore } from "@store/store";
 import { InnerStyle } from "./Inner.styled";
 import testImg from "@assets/images/home/test.png";
 
