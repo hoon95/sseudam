@@ -14,15 +14,14 @@ import {
   Select,
   MenuItem,
   Avatar,
-  FormGroup,
   FormControlLabel,
-  Checkbox,
+  Radio,
+  RadioGroup,
   Pagination,
 } from "@mui/material";
 
 export interface PetType {
   desertion_no: number;
-  filename: string;
   happen_dt: number;
   happen_place: string;
   kind_cd: string;
@@ -50,20 +49,17 @@ export const Search = () => {
   const location = useLocation();
   const { type, setType, page, setPage } = usePaginationStore();
 
-  const handleType = (event: ChangeEvent<HTMLInputElement>, type: string) => {
-    const checked = event.target.checked;
-    if (checked) {
-      setType(type);
-    }
+  const handleType = (event: ChangeEvent<HTMLInputElement>) => {
+    setType(event.target.value);
   };
 
-  const handlePage = (event: ChangeEvent<unknown>, value: number) => {
+  const handlePage = (value: number) => {
     setPage(value);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    //   petList();
+    // petList();
   }, [location, page]);
 
   const { data, isLoading, error } = useQuery<PetType[]>({
@@ -83,7 +79,13 @@ export const Search = () => {
     return <p>No data available</p>;
   }
 
-  // const totalPage = Math.ceil(data.length / 5);
+  // Pagination settings
+  const itemsPerPage = 20;
+  const totalPage = Math.ceil(data.length / itemsPerPage);
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = data.slice(startIndex, endIndex);
 
   const categoryPath = "/src/assets/images/search/category";
   const dogList = [
@@ -100,28 +102,20 @@ export const Search = () => {
       <Container>
         <Filter>
           <h3>종류</h3>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="dog"
-                  checked={type === "dog" ? true : false}
-                  onChange={(e) => handleType(e, "dog")}
-                />
-              }
-              label="강아지"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="cat"
-                  checked={type === "cat" ? true : false}
-                  onChange={(e) => handleType(e, "cat")}
-                />
-              }
-              label="고양이"
-            />
-          </FormGroup>
+          <FormControl>
+            <RadioGroup value={type} onChange={handleType} row>
+              <FormControlLabel
+                value="dog"
+                control={<Radio />}
+                label="강아지"
+              />
+              <FormControlLabel
+                value="cat"
+                control={<Radio />}
+                label="고양이"
+              />
+            </RadioGroup>
+          </FormControl>
           <FormControl>
             <InputLabel id="dogType">견종</InputLabel>
             <Select
@@ -147,9 +141,9 @@ export const Search = () => {
           </FormControl>
         </Filter>
         <div className="list">
-          {data.map((item, index) => (
+          {paginatedData.map((item, index) => (
             <Card key={index} variant="outlined" className="card">
-              <img src={item.filename} alt="유기동물 사진" />
+              <img src={item.popfile} alt="유기동물 사진" />
               <CardContent>
                 <Typography className="text">
                   <p>
@@ -184,8 +178,9 @@ export const Search = () => {
         </div>
       </Container>
       <Pagination
-        count={5}
-        onChange={handlePage}
+        count={totalPage}
+        page={page}
+        onChange={(event, value) => handlePage(value)}
         sx={{
           width: "20vw",
           margin: "auto",

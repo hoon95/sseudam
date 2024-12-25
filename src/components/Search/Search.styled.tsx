@@ -68,7 +68,7 @@ export const Container = styled.div`
 
     img {
       width: 100%;
-      object-fit: contain;
+      height: 20vh;
     }
 
     & .text {

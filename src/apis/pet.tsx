@@ -3,7 +3,6 @@ import { supabase } from "@utils/supabaseClient";
 
 export interface PetType {
   desertionNo: number;
-  filename: string;
   happenDt: number;
   happenPlace: string;
   kindCd: string;
@@ -54,7 +53,6 @@ export const petList = async () => {
         const { data: insertData, error } = await supabase.from("list").insert([
           {
             desertion_no: pet.desertionNo,
-            filename: pet.filename,
             happen_dt: pet.happenDt,
             happen_place: pet.happenPlace,
             kind_cd: pet.kindCd,
