@@ -29,54 +29,8 @@ export const Banner = styled.div`
   }
 `;
 
-export const Filter = styled.aside`
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap);
-
-  h3 {
-    font-size: var(--text-md);
-  }
-
-  /* select box */
-  & .MuiSelect-select {
-    display: flex;
-    align-items: center;
-  }
-`;
-
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 calc(var(--gap) * 6) 0 calc(var(--gap) * 3);
-
-  & .list {
-    width: 65vw;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
-  }
-
-  & .card {
-    width: calc(25% - var(--gap));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: var(--gap);
-    box-shadow: 1px 1px 2px #999;
-
-    img {
-      width: 100%;
-      height: 20vh;
-    }
-
-    & .text {
-      width: 100%;
-
-      p {
-        font-size: var(--text-sm);
-      }
-    }
-  }
 `;
