@@ -139,6 +139,6 @@ export const useFilterStore = create<FilterState>((set) => ({
   setGender: (gender) => set({ gender }),
   age: [0, 10],
   setAge: (ageRange) => set({ age: ageRange }),
-  weight: [0, 10],
+  weight: [0, 30],
   setWeight: (weightRange) => set({ weight: weightRange }),
 }));

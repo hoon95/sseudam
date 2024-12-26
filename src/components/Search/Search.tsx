@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@apis/supabase";
-import { usePaginationStore } from "@store/store";
+import { usePaginationStore, useFilterStore } from "@store/store";
 import { Banner, Container } from "./Search.styled";
 import { Filter } from "@components/Filter/Filter";
 import { PetList } from "@components/PetList/PetList";
@@ -9,21 +9,31 @@ import { useEffect } from "react";
 // import { fetchPetData } from "@apis/pet";
 
 export const Search = () => {
-  const { type, setType, page, setPage } = usePaginationStore();
+  const { page, setPage } = usePaginationStore();
+  const { type, setType, gender, age, weight } = useFilterStore();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     // fetchPetData();
   }, [page]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["petData", "list", type, page],
-    queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
+    queryKey: ["petData", "list", type, gender, age, weight],
+    queryFn: ({ queryKey }) =>
+      fetchData(
+        queryKey[1],
+        queryKey[2],
+        queryKey[3],
+        queryKey[4],
+        queryKey[5],
+      ),
   });
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
   if (!data) return <p>No data available</p>;
 
+  // Pagination
   const itemsPerPage = 20;
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -37,7 +47,7 @@ export const Search = () => {
       </Banner>
       <Container>
         <Filter type={type} setType={setType} />
-        <PetList data={paginatedData} />
+        <PetList data={paginatedData} type={type} age={age} weight={weight} />
       </Container>
       <Paging
         totalPages={totalPages}

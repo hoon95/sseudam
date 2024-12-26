@@ -81,8 +81,9 @@ export const Filter = () => {
           defaultValue="male"
           row
         >
-          <FormControlLabel value="male" control={<Radio />} label="남자" />
-          <FormControlLabel value="female" control={<Radio />} label="여자" />
+          <FormControlLabel value="male" control={<Radio />} label="수컷" />
+          <FormControlLabel value="female" control={<Radio />} label="암컷" />
+          <FormControlLabel value="none" control={<Radio />} label="모름" />
         </RadioGroup>
       </FormControl>
       <FormControl>
@@ -114,7 +115,7 @@ export const Filter = () => {
             onChange={handleWeight}
             valueLabelDisplay="auto"
             min={0}
-            max={10}
+            max={30}
             step={1}
           />
         </Box>

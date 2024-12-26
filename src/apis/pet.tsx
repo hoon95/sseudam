@@ -2,6 +2,7 @@ import axios from "axios";
 import { supabase } from "@utils/supabaseClient";
 
 export interface PetType {
+  itemId: number;
   desertionNo: number;
   filename: string;
   happenDt: number;
