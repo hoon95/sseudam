@@ -43,6 +43,12 @@ interface PaginationState {
 interface FilterState {
   type: string;
   setType: (type: string) => void;
+  gender: string;
+  setGender: (gender: string) => void;
+  age: number[];
+  setAge: (age: number[]) => void;
+  weight: number[];
+  setWeight: (weigth: number[]) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -129,4 +135,10 @@ export const usePaginationStore = create<PaginationState>((set) => ({
 export const useFilterStore = create<FilterState>((set) => ({
   type: "dog",
   setType: (type) => set({ type }),
+  gender: "male",
+  setGender: (gender) => set({ gender }),
+  age: [0, 10],
+  setAge: (ageRange) => set({ age: ageRange }),
+  weight: [0, 10],
+  setWeight: (weightRange) => set({ weight: weightRange }),
 }));
