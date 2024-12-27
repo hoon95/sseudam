@@ -13,7 +13,7 @@ export const Search = () => {
   const { type, setType, gender, age, weight } = useFilterStore();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     // fetchPetData();
   }, [page]);
 

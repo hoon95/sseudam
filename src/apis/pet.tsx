@@ -51,7 +51,21 @@ export const fetchPetData = async () => {
 
     // Supabase DB에 저장
     const savePetsToDB = async () => {
+      const currentYear = new Date().getFullYear();
+
       for (const pet of pets) {
+        const kindCd = pet.kindCd;
+        const type = kindCd.includes("개") ? "강아지" : "고양이";
+        const kind = kindCd.replace(/\[.*?\]\s*/, "").trim();
+
+        const ageMatch = pet.age.match(/^(\d{4})/);
+        const ageYear = ageMatch ? parseInt(ageMatch[1], 10) : null;
+        const calculatedAge = ageYear ? currentYear - ageYear : null;
+        const weightMatch = pet.weight.match(/^([\d.]+)/);
+        const calculatedWeight = weightMatch
+          ? parseFloat(weightMatch[1])
+          : null;
+
         const { data: insertData, error } = await supabase.from("list").insert([
           {
             desertion_no: pet.desertionNo,
@@ -77,6 +91,10 @@ export const fetchPetData = async () => {
             charge_nm: pet.chargeNm,
             officetel: pet.officetel,
             notice_comment: pet.noticeComment,
+            type,
+            kind,
+            calculated_age: calculatedAge,
+            calculated_weight: calculatedWeight,
           },
         ]);
 

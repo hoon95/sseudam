@@ -11,9 +11,9 @@ export const fetchData = async (
     let query = supabase.from(table).select("*");
 
     if (type === "dog") {
-      query = query.like("kind_cd", "[개]%");
+      query = query.eq("type", "강아지");
     } else if (type === "cat") {
-      query = query.like("kind_cd", "[고양이]%");
+      query = query.eq("type", "고양이");
     }
 
     if (gender === "male") {
@@ -24,25 +24,12 @@ export const fetchData = async (
       query = query.eq("sex_cd", "Q");
     }
 
-    const currentYear = new Date().getFullYear();
-    if (age.length > 0) {
-      const [minAge, maxAge] = age;
-      const minYear = Number(currentYear) - maxAge;
-      const maxYear = Number(currentYear) - minAge;
-
-      query = query
-        .gte("age", `${minYear}(년생)`)
-        .lte("age", `${maxYear}(년생)`);
-    }
-
-    // if (weight.length > 0) {
-    //   const [minWeight, maxWeight] = weight;
-    //   console.log(minWeight);
-    //   console.log(maxWeight);
-    //   query = query
-    //     .gte("weight", `${minWeight}(Kg)`)
-    //     .lte("weight", `${maxWeight}(Kg)`);
-    // }
+    const [minAge, maxAge] = age;
+    const [minWeight, maxWeight] = weight;
+    query = query.gte("calculated_age", minAge).lte("calculated_age", maxAge);
+    query = query
+      .gte("calculated_weight", minWeight)
+      .lte("calculated_weight", maxWeight);
 
     const { data, error } = await query;
 

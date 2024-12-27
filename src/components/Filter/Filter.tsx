@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { useFilterStore } from "@store/store";
 import {
   FormControl,
@@ -25,17 +25,49 @@ const dogList = [
 export const Filter = () => {
   const { type, setType, gender, setGender, age, setAge, weight, setWeight } =
     useFilterStore();
+
   const handleType = (event: ChangeEvent<HTMLInputElement>) => {
     setType(event.target.value);
   };
   const handleGender = (event: ChangeEvent<HTMLInputElement>) => {
     setGender(event.target.value);
   };
-  const handleAge = (event: Event, newAge: number | number[]) => {
-    setAge(newAge as number[]);
+  // const handleAge = (
+  //   event: React.SyntheticEvent | Event,
+  //   newAge: number | number[],
+  // ) => {
+  //   setAge(newAge as number[]);
+  // };
+  // const handleWeight = (
+  //   event: React.SyntheticEvent | Event,
+  //   newWeight: number | number[],
+  // ) => {
+  //   setWeight(newWeight as number[]);
+  // };
+
+  const [tempAge, setTempAge] = useState<number[]>(age);
+  const [tempWeight, setTempWeight] = useState<number[]>(weight);
+
+  const handleAgeChange = (
+    event: React.SyntheticEvent | Event,
+    newAge: number | number[],
+  ) => {
+    setTempAge(newAge as number[]);
   };
-  const handleWeight = (event: Event, newWeight: number | number[]) => {
-    setWeight(newWeight as number[]);
+
+  const handleWeightChange = (
+    event: React.SyntheticEvent | Event,
+    newWeight: number | number[],
+  ) => {
+    setTempWeight(newWeight as number[]);
+  };
+
+  const handleAgeCommitted = () => {
+    setAge(tempAge);
+  };
+
+  const handleWeightCommitted = () => {
+    setWeight(tempWeight);
   };
 
   return (
@@ -94,8 +126,9 @@ export const Filter = () => {
         <Box sx={{ width: 300 }}>
           <Slider
             getAriaLabel={() => "Age range"}
-            value={age}
-            onChange={handleAge}
+            value={tempAge}
+            onChange={handleAgeChange}
+            onChangeCommitted={handleAgeCommitted}
             valueLabelDisplay="auto"
             min={0}
             max={10}
@@ -111,8 +144,9 @@ export const Filter = () => {
         <Box sx={{ width: 300 }}>
           <Slider
             getAriaLabel={() => "Weight range"}
-            value={weight}
-            onChange={handleWeight}
+            value={tempWeight}
+            onChange={handleWeightChange}
+            onChangeCommitted={handleWeightCommitted}
             valueLabelDisplay="auto"
             min={0}
             max={30}
