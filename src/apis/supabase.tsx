@@ -1,11 +1,48 @@
 import { supabase } from "@utils/supabaseClient";
 
+interface RegionType {
+  region: string;
+}
+
+export const fetchLocation = async (
+  select: string,
+  table: string,
+  region: string,
+) => {
+  try {
+    let query = supabase.from(table).select(select);
+
+    if (region) {
+      query = query.eq("region", region);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    if (!region) {
+      return data.filter(
+        (item: RegionType, index: number, self: RegionType[]) =>
+          index === self.findIndex((t) => t.region === item.region),
+      );
+    }
+
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const fetchData = async (
   table: string,
   type: string,
   gender: string,
   age: number[],
   weight: string,
+  region?: string,
+  city?: string,
 ) => {
   try {
     let query = supabase.from(table).select("*");
@@ -30,6 +67,13 @@ export const fetchData = async (
     query = query
       .gte("calculated_weight", minWeight)
       .lte("calculated_weight", maxWeight);
+
+    if (region) {
+      query = query.like("org_nm", `${region}%`);
+    }
+    if (city) {
+      query = query.like("org_nm", `%${city}`);
+    }
 
     const { data, error } = await query;
 

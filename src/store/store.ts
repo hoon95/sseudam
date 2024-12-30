@@ -51,6 +51,17 @@ interface FilterState {
   setWeight: (weigth: number[]) => void;
 }
 
+interface locationState {
+  region: string[];
+  setRegion: (region: string[]) => void;
+  city: string[];
+  setCity: (city: string[]) => void;
+  selectedRegion?: string;
+  setSelectedRegion: (selectedRegion?: string) => void;
+  selectedCity?: string;
+  setSelectedCity: (selectedCity?: string) => void;
+}
+
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
@@ -141,4 +152,15 @@ export const useFilterStore = create<FilterState>((set) => ({
   setAge: (ageRange) => set({ age: ageRange }),
   weight: [0, 30],
   setWeight: (weightRange) => set({ weight: weightRange }),
+}));
+
+export const useLocationStore = create<locationState>((set) => ({
+  region: [],
+  setRegion: (regionList) => set({ region: regionList }),
+  city: [],
+  setCity: (cityList) => set({ city: cityList }),
+  selectedRegion: "",
+  setSelectedRegion: (selectedRegion) => set({ selectedRegion }),
+  selectedCity: "",
+  setSelectedCity: (selectedCity) => set({ selectedCity }),
 }));

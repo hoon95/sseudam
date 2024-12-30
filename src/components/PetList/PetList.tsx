@@ -8,9 +8,10 @@ interface PetType {
   notice_sdt: string;
   notice_edt: string;
   kind_cd: string;
-  age: string;
   sex_cd: string;
-  weight: string;
+  calculated_age: string;
+  calculated_weight: string;
+  org_nm: string;
 }
 
 interface PetListProps {
@@ -28,9 +29,10 @@ export const PetList = ({ data }: PetListProps) => {
                 공고날짜: {item.notice_sdt} - {item.notice_edt}
               </p>
               <p>품종: {item.kind_cd}</p>
-              <p>나이: {item.age}</p>
+              <p>나이: {item.calculated_age}세</p>
               <p>성별: {item.sex_cd}</p>
-              <p>체중: {item.weight}</p>
+              <p>체중: {item.calculated_weight}kg</p>
+              <p>지역: {item.org_nm}</p>
             </Typography>
           </CardContent>
         </Card>

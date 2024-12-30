@@ -1,26 +1,20 @@
-import { useState, ChangeEvent } from "react";
-import { useFilterStore } from "@store/store";
+import { useState, ChangeEvent, useEffect } from "react";
+import { fetchLocation } from "@apis/supabase";
+import { useFilterStore, useLocationStore } from "@store/store";
 import {
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  Avatar,
   FormControlLabel,
   Radio,
   RadioGroup,
   Box,
   Slider,
+  SelectChangeEvent,
 } from "@mui/material";
 
 import { Container } from "./Filter.styled";
-
-const categoryPath = "/src/assets/images/search/category";
-const dogList = [
-  { src: `${categoryPath}/dog1.png`, name: "골든 리트리버", value: "dog1" },
-  { src: `${categoryPath}/dog2.png`, name: "그레이 하운드", value: "dog2" },
-  { src: `${categoryPath}/dog3.png`, name: "그레이트 덴", value: "dog3" },
-];
 
 export const Filter = () => {
   const { type, setType, gender, setGender, age, setAge, weight, setWeight } =
@@ -32,18 +26,6 @@ export const Filter = () => {
   const handleGender = (event: ChangeEvent<HTMLInputElement>) => {
     setGender(event.target.value);
   };
-  // const handleAge = (
-  //   event: React.SyntheticEvent | Event,
-  //   newAge: number | number[],
-  // ) => {
-  //   setAge(newAge as number[]);
-  // };
-  // const handleWeight = (
-  //   event: React.SyntheticEvent | Event,
-  //   newWeight: number | number[],
-  // ) => {
-  //   setWeight(newWeight as number[]);
-  // };
 
   const [tempAge, setTempAge] = useState<number[]>(age);
   const [tempWeight, setTempWeight] = useState<number[]>(weight);
@@ -70,9 +52,82 @@ export const Filter = () => {
     setWeight(tempWeight);
   };
 
+  const {
+    region,
+    setRegion,
+    city,
+    setCity,
+    selectedRegion,
+    setSelectedRegion,
+    selectedCity,
+    setSelectedCity,
+  } = useLocationStore();
+
+  useEffect(() => {
+    const getLocation = async () => {
+      const regionData = await fetchLocation("*", "location");
+      setRegion(regionData);
+    };
+    getLocation();
+  }, [setRegion]);
+
+  const handleRegion = async (event: SelectChangeEvent<string>) => {
+    const eventRegion = event.target.value;
+    const cityData = await fetchLocation("*", "location", eventRegion);
+    setCity(cityData);
+    setSelectedRegion(eventRegion);
+  };
+
+  const handleCity = async (event: SelectChangeEvent<string>) => {
+    setSelectedCity(event.target.value);
+  };
+
+  interface RegionType {
+    region: string;
+    uprcd: string;
+  }
+
   return (
     <Container>
       <h3>필터링</h3>
+      <FormControl>
+        <InputLabel id="region">시/도</InputLabel>
+        <Select
+          labelId="center"
+          id="demo-simple-select"
+          label="center"
+          value={selectedRegion}
+          onChange={handleRegion}
+        >
+          <MenuItem value="">
+            <em>전체</em>
+          </MenuItem>
+          {region.map((item: RegionType) => (
+            <MenuItem value={item.region} key={item.uprcd}>
+              {item.region}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl>
+        <InputLabel id="city">시/군/구</InputLabel>
+        <Select
+          labelId="center"
+          id="demo-simple-select"
+          label="center"
+          value={selectedCity}
+          onChange={handleCity}
+        >
+          <MenuItem value="">
+            <em>전체</em>
+          </MenuItem>
+          {city.map((item) => (
+            <MenuItem value={item.city} key={item.orgcd}>
+              {item.city}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <FormControl>
         <p className="subtitle">종류</p>
         <RadioGroup value={type} onChange={handleType} defaultValue="dog" row>
@@ -80,31 +135,6 @@ export const Filter = () => {
           <FormControlLabel value="cat" control={<Radio />} label="고양이" />
         </RadioGroup>
       </FormControl>
-      {type === "dog" && (
-        <FormControl>
-          <InputLabel id="dogType">견종</InputLabel>
-          <Select
-            labelId="center"
-            id="demo-simple-select"
-            label="center"
-            className="dogType"
-          >
-            <MenuItem value="" disabled>
-              <em>견종을 선택하세요</em>
-            </MenuItem>
-            {dogList.map((item, index) => (
-              <MenuItem value={item.value} key={index}>
-                <Avatar
-                  src={item.src}
-                  alt={`dog${index}`}
-                  sx={{ marginRight: "calc(var(--gap) * 0.5)" }}
-                />
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
       <FormControl>
         <p className="subtitle">성별</p>
         <RadioGroup
