@@ -146,7 +146,7 @@ export const usePaginationStore = create<PaginationState>((set) => ({
 export const useFilterStore = create<FilterState>((set) => ({
   type: "dog",
   setType: (type) => set({ type }),
-  gender: "male",
+  gender: "all",
   setGender: (gender) => set({ gender }),
   age: [0, 10],
   setAge: (ageRange) => set({ age: ageRange }),

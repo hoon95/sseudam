@@ -5,7 +5,7 @@ import {
   useFilterStore,
   useLocationStore,
 } from "@store/store";
-import { Banner, Container } from "./Search.styled";
+import { Banner, Container, PagingLeft } from "./Search.styled";
 import { Filter } from "@components/Filter/Filter";
 import { PetList } from "@components/PetList/PetList";
 import { Paging } from "@components/Paging/Paging";
@@ -74,11 +74,14 @@ export const Search = () => {
         <Filter type={type} setType={setType} />
         <PetList data={paginatedData} type={type} age={age} weight={weight} />
       </Container>
-      <Paging
-        totalPages={totalPages}
-        currentPage={page}
-        onChangePage={setPage}
-      />
+      <PagingLeft>
+        <div className="inner"></div>
+        <Paging
+          totalPages={totalPages}
+          currentPage={page}
+          onChangePage={setPage}
+        />
+      </PagingLeft>
     </>
   );
 };

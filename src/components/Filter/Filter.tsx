@@ -82,9 +82,11 @@ export const Filter = () => {
     setSelectedCity(event.target.value);
   };
 
-  interface RegionType {
+  interface LocationType {
     region: string;
+    city: string;
     uprcd: string;
+    orgcd: string;
   }
 
   return (
@@ -102,7 +104,7 @@ export const Filter = () => {
           <MenuItem value="">
             <em>전체</em>
           </MenuItem>
-          {region.map((item: RegionType) => (
+          {region.map((item: LocationType) => (
             <MenuItem value={item.region} key={item.uprcd}>
               {item.region}
             </MenuItem>
@@ -121,11 +123,12 @@ export const Filter = () => {
           <MenuItem value="">
             <em>전체</em>
           </MenuItem>
-          {city.map((item) => (
-            <MenuItem value={item.city} key={item.orgcd}>
-              {item.city}
-            </MenuItem>
-          ))}
+          {region &&
+            city.map((item: LocationType) => (
+              <MenuItem value={item.city} key={item.orgcd}>
+                {item.city}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
       <FormControl>
@@ -143,6 +146,7 @@ export const Filter = () => {
           defaultValue="male"
           row
         >
+          <FormControlLabel value="all" control={<Radio />} label="전체" />
           <FormControlLabel value="male" control={<Radio />} label="수컷" />
           <FormControlLabel value="female" control={<Radio />} label="암컷" />
           <FormControlLabel value="none" control={<Radio />} label="모름" />

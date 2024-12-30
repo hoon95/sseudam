@@ -34,3 +34,13 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 0 calc(var(--gap) * 6) 0 calc(var(--gap) * 3);
 `;
+
+export const PagingLeft = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 calc(var(--gap) * 6) 0 calc(var(--gap) * 3);
+
+  & .inner {
+    width: 20%;
+  }
+`;

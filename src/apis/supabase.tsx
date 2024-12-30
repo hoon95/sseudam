@@ -43,6 +43,7 @@ export const fetchData = async (
   weight: string,
   region?: string,
   city?: string,
+  id?: number,
 ) => {
   try {
     let query = supabase.from(table).select("*");
@@ -53,7 +54,9 @@ export const fetchData = async (
       query = query.eq("type", "고양이");
     }
 
-    if (gender === "male") {
+    if (gender === "all") {
+      // query = query.eq("sex_cd", "");
+    } else if (gender === "male") {
       query = query.eq("sex_cd", "M");
     } else if (gender === "female") {
       query = query.eq("sex_cd", "F");
@@ -63,16 +66,43 @@ export const fetchData = async (
 
     const [minAge, maxAge] = age;
     const [minWeight, maxWeight] = weight;
-    query = query.gte("calculated_age", minAge).lte("calculated_age", maxAge);
-    query = query
-      .gte("calculated_weight", minWeight)
-      .lte("calculated_weight", maxWeight);
+
+    if (age && weight) {
+      query = query.gte("calculated_age", minAge).lte("calculated_age", maxAge);
+      query = query
+        .gte("calculated_weight", minWeight)
+        .lte("calculated_weight", maxWeight);
+    }
 
     if (region) {
       query = query.like("org_nm", `${region}%`);
     }
     if (city) {
       query = query.like("org_nm", `%${city}`);
+    }
+
+    if (id) {
+      query = query.eq("desertion_no", id);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const fetchDetail = async (id?: number) => {
+  try {
+    let query = supabase.from("list").select("*");
+
+    if (id) {
+      query = query.eq("desertion_no", id);
     }
 
     const { data, error } = await query;
