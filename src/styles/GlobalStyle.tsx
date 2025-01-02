@@ -19,6 +19,7 @@ export const GlobalStyle = () => (
         --light: #ffffff;
         --dark: #231f1d;
         --gray: #b6b1a7;
+        --yellow: #ffe835;
       }
 
       @font-face {

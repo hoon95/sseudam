@@ -1,3 +1,6 @@
+import styled from "@emotion/styled";
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const InnerStyle = {
   position: "absolute",
   top: "50%",
@@ -8,6 +11,7 @@ export const InnerStyle = {
   p: 4,
   borderRadius: "var(--gap)",
   boxShadow: "5px 5px 3px #666",
+  whiteSpace: "pre-line",
 
   display: "flex",
   flexDirection: "column",
@@ -21,12 +25,38 @@ export const InnerStyle = {
   "& .answer": {
     width: "100%",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
     gap: "calc(var(--gap) * 0.5)",
+    paddingTop: "var(--gap)",
   },
 
   "& .answerBtn": {
-    width: "45%",
-    marginBottom: "0.5rem",
+    fontSize: "var(--text-sm)",
+    color: "var(--dark)",
   },
 };
+
+export const InnerResult = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap);
+
+  p {
+    &:first-of-type {
+      font-size: calc(var(--text-md) * 0.7);
+    }
+    &:nth-of-type(2) {
+      font-size: var(--text-md);
+    }
+  }
+`;
+
+export const KakaoInner = styled.div`
+  display: flex;
+  align-items: center;
+  gap: calc(var(--gap) * 0.5);
+  border-radius: calc(var(--gap) * 0.5);
+  padding: calc(var(--gap) * 0.5) var(--gap);
+  background: var(--yellow);
+`;

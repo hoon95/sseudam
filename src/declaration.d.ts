@@ -7,3 +7,8 @@ declare module "@services/*";
 declare module "@utils/*";
 
 declare module "aos";
+
+interface Window {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Kakao: any;
+}

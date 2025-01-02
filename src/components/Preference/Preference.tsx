@@ -12,17 +12,11 @@ export const Preference = () => {
       <Prefer>
         <p className="intro">취향저격</p>
         <Cursor>
-          <p className="myPrefer">내 취향은</p>
+          <p className="myPrefer">내 취향은..</p>
           <div className="cursor">
             <Typewriter
               options={{
-                strings: [
-                  "웰시코기",
-                  "포메라니안",
-                  "닥스훈트",
-                  "말티즈",
-                  "사모예드",
-                ],
+                strings: ["말티즈", "푸들", "포메라니안", "치와와", "시츄"],
                 autoStart: true,
                 loop: true,
               }}
@@ -30,7 +24,7 @@ export const Preference = () => {
             <p>입니다</p>
           </div>
 
-          <p>나에게 맞는 반려동물을 AI가 추천해줄게요</p>
+          <p>나에게 맞는 반려동물을 AI가 추천해줄게요!</p>
         </Cursor>
         <ButtonModal />
       </Prefer>

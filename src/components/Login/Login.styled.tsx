@@ -22,7 +22,7 @@ export const Sns = styled.section`
     cursor: pointer;
 
     &.kakao {
-      background: #ffe835;
+      background: var(--yellow);
     }
     &.instagram {
       color: var(--light);
