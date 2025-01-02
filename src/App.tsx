@@ -4,6 +4,7 @@ import { SearchPage } from "@pages/SearchPage";
 import { SharePage } from "@pages/SharePage";
 import { LoginPage } from "@pages/LoginPage";
 import { Header } from "@components/common/Header/Header";
+import { Footer } from "@components/common/Footer/Footer";
 import { PetDetail } from "@components/PetList/PetDetail/PetDetail";
 import { GlobalStyle } from "@styles/GlobalStyle";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -23,6 +24,7 @@ export const App = () => {
           <Route path="/search/detail/:id" element={<PetDetail />}></Route>
           <Route path="/share" element={<SharePage />}></Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </QueryClientProvider>
   );
