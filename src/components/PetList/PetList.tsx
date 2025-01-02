@@ -1,7 +1,8 @@
 // PetList.tsx
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Avatar } from "@mui/material";
 import { List, EmptyList } from "./PetList.styled";
 import { Link } from "react-router-dom";
+import avatar from "@assets/images/search/avatar.png";
 
 interface PetType {
   desertion_no: number;
@@ -43,7 +44,12 @@ export const PetList = ({ data }: PetListProps) => {
         ))
       ) : (
         <EmptyList>
-          <p>검색 결과가 없습니다 ㅠㅠ</p>
+          <Avatar
+            src={avatar}
+            alt="검색 결과가 없습니다"
+            sx={{ width: "30%", height: "50%" }}
+          />
+          <p>검색 결과가 없습니다 &#x1F622;</p>
         </EmptyList>
       )}
     </List>

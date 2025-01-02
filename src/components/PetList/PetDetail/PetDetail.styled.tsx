@@ -1,5 +1,28 @@
 import styled from "@emotion/styled";
 
+export const Notice = styled.div`
+  display: flex;
+  align-items: center;
+  gap: calc(var(--gap) * 0.2);
+  color: var(--gray);
+  font-size: var(--text-sm);
+  padding-left: var(--gap);
+`;
+
+export const NoticeTooltip = styled.ul`
+  display: flex;
+  flex-direction: column;
+
+  & li {
+    font-size: var(--text-sm);
+
+    &.title {
+      font-size: calc(var(--text-md) * 0.8);
+      padding-bottom: var(--gap);
+    }
+  }
+`;
+
 export const Detail = styled.div`
   width: 50vw;
   display: flex;

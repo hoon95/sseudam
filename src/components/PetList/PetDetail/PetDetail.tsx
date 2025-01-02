@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { fetchDetail } from "@apis/supabase";
@@ -5,12 +6,19 @@ import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { Button, Divider } from "@mui/material";
+import { Button, Divider, Tooltip } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
 import CallIcon from "@mui/icons-material/Call";
 import { blue, pink } from "@mui/material/colors";
-import { Detail, BtnContainer, Info } from "./PetDetail.styled";
+import {
+  Notice,
+  Detail,
+  BtnContainer,
+  Info,
+  NoticeTooltip,
+} from "./PetDetail.styled";
 
 export const PetDetail = () => {
   const { id } = useParams();
@@ -24,6 +32,17 @@ export const PetDetail = () => {
   if (error) return <p>Error...</p>;
   console.log(data);
   const item = data[0];
+
+  const NoticeDetail = () => {
+    return (
+      <NoticeTooltip>
+        <li className="title">공고내용</li>
+        <li>공고번호 : {item.notice_no}</li>
+        <li>공고기간 : {`${item.notice_sdt} - ${item.notice_edt}`}</li>
+        <li>발견장소 : {item.happen_place}</li>
+      </NoticeTooltip>
+    );
+  };
 
   interface LatLng {
     lat: number | null;
@@ -55,7 +74,7 @@ export const PetDetail = () => {
 
     useEffect(() => {
       getLatLng(addr);
-    }, []);
+    }, [addr, getLatLng]);
 
     if (latLng) {
       const lat = latLng?.lat ?? 0;
@@ -94,6 +113,15 @@ export const PetDetail = () => {
           <p className="age">{item.calculated_age}세</p>
           <p>&nbsp;/&nbsp;</p>
           <p className="weight">{item.calculated_weight}kg</p>
+          <Tooltip
+            title={<NoticeDetail />}
+            classes={{ tooltip: "custom-tooltip" }}
+          >
+            <Notice>
+              <InfoIcon />
+              <p>공고내용</p>
+            </Notice>
+          </Tooltip>
         </div>
         <BtnContainer>
           <Button variant="contained" color="success">
@@ -136,10 +164,14 @@ export const PetDetail = () => {
           <p className="title">보호장소</p>
           <div className="container">
             <div className="text">
-              <p>{item.care_nm}</p>
+              <p>
+                {item.care_nm} (담당자 : {item.charge_nm})
+              </p>
               <div className="call">
                 <CallIcon />
-                <p>{item.officetel}</p>
+                <p>
+                  {item.care_tel} &nbsp;/&nbsp; {item.officetel}
+                </p>
               </div>
             </div>
             <TooltipMap />

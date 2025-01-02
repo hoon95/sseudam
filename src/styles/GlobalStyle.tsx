@@ -53,6 +53,14 @@ export const GlobalStyle = () => (
         color: var(--main) !important;
       }
 
+      /* PetDetail - Tooltip */
+      & .custom-tooltip {
+        color: var(--dark) !important;
+        background: var(--light) !important;
+        border: 1px solid var(--dark);
+        padding: var(--gap) !important;
+      }
+
       & .MuiPagination-ul {
         justify-content: center;
       }

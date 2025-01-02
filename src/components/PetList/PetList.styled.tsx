@@ -32,6 +32,9 @@ export const List = styled.div`
 export const EmptyList = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: var(--gap);
+  font-size: var(--text-md);
 `;
