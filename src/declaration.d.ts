@@ -10,5 +10,9 @@ declare module "aos";
 
 interface Window {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  kakao: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Kakao: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  naver: any;
 }

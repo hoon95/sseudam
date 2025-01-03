@@ -15,6 +15,7 @@
       "@apis/*": ["apis/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"]
-    }
+    },
+    "types": ["kakao.maps.d.ts"]
   }
 }

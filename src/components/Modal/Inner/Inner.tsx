@@ -6,13 +6,6 @@ import { KakaoIcon } from "@components/Login/Login.styled";
 import testImg from "@assets/images/home/test.png";
 import { Box, Typography, Button, Avatar } from "@mui/material";
 
-// import cat from "@assets/images/home/cat.png";
-// import pomeranian from "@assets/images/home/result/pomeranian.png";
-// import maltese from "@assets/images/home/result/maltese.png";
-// import poodle from "@assets/images/home/result/poodle.png";
-// import beagle from "@assets/images/home/result/beagle.png";
-// import retriever from "@assets/images/home/result/retriever.png";
-
 export const Inner = () => {
   const {
     quizStart,

@@ -99,14 +99,14 @@ export const useModalStore = create<ModalState>((set) => ({
   setFinalResult: (result) => set({ finalResult: result }),
   qna: [
     {
-      question: `1. 주말에 특별한 계획이 없습니다. \n 당신은 어떻게 시간을 보내고 싶나요?`,
+      question: `1. 주말에 특별한 계획이 없습니다. 당신은 어떻게 시간을 보내고 싶나요?`,
       answers: [
         {
-          text: `아침 일찍 일어나 산책이나 운동을 하며 시간을 보낼 것 같아요. \n 활기차게 하루를 시작하는게 좋아요!`,
+          text: `아침 일찍 일어나 산책이나 운동을 하며 시간을 보낼 것 같아요. 활기차게 하루를 시작하는게 좋아요!`,
           weight: 1,
         },
         {
-          text: `늦잠을 자고 집에서 책을 읽거나 \n 영화를 보면서 조용히 보내는 게 좋아요!`,
+          text: `늦잠을 자고 집에서 책을 읽거나 영화를 보면서 조용히 보내는 게 좋아요!`,
           weight: 0,
         },
       ],

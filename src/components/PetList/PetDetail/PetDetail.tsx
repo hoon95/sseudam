@@ -1,9 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { fetchDetail } from "@apis/supabase";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import axios from "axios";
+import { NaverMapLoader, getCoordinates } from "@apis/map";
 import { useEffect, useState } from "react";
 
 import { Button, Divider, Tooltip } from "@mui/material";
@@ -44,56 +42,51 @@ export const PetDetail = () => {
     );
   };
 
-  interface LatLng {
-    lat: number | null;
-    lng: number | null;
-  }
+  const NaverMap = () => {
+    const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+    const [latLng, setLatLng] = useState<[number, number]>([0, 0]);
 
-  const TooltipMap = () => {
-    // lat, lng 가져오기
-    const [latLng, setLatLng] = useState<LatLng | null>(null);
-
-    const addr = item.care_addr;
-    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    const getLatLng = async (address: string) => {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-        address,
-      )}&key=${apiKey}`;
-
-      try {
-        const response = await axios.get(url);
-
-        if (response.data.status === "OK") {
-          const { lat, lng } = response.data.results[0].geometry.location;
-          setLatLng({ lat, lng });
-        }
-      } catch (error) {
-        console.error("지도 API 오류: ", error);
-      }
+    const handleScriptLoad = () => {
+      setIsScriptLoaded(true);
     };
 
     useEffect(() => {
-      getLatLng(addr);
-    }, [addr, getLatLng]);
+      const fetchLocation = async () => {
+        const location = await getCoordinates(item.care_addr);
+        if (location) {
+          setLatLng([location.lat, location.lng]);
+        }
+      };
 
-    if (latLng) {
-      const lat = latLng?.lat ?? 0;
-      const lng = latLng?.lng ?? 0;
+      fetchLocation();
+    }, [item.care_addr]);
 
-      return (
-        <APIProvider apiKey={apiKey}>
-          <Map
-            className="map"
-            defaultCenter={{ lat: lat, lng: lng }}
-            defaultZoom={15}
-            gestureHandling={"greedy"}
-            disableDefaultUI={true}
-          >
-            <Marker position={{ lat: lat, lng: lng }} />
-          </Map>
-        </APIProvider>
-      );
-    }
+    // 지도 및 마커 생성
+    useEffect(() => {
+      if (
+        isScriptLoaded &&
+        window.naver &&
+        latLng[0] !== 0 &&
+        latLng[1] !== 0
+      ) {
+        const map = new window.naver.maps.Map("map", {
+          center: new window.naver.maps.LatLng(latLng[0], latLng[1]),
+          zoom: 15,
+        });
+
+        new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(latLng[0], latLng[1]),
+          map: map,
+        });
+      }
+    }, [latLng, isScriptLoaded]);
+
+    return (
+      <>
+        <NaverMapLoader onLoad={handleScriptLoad} />
+        <div id="map" style={{ width: "100%", height: "400px" }} />
+      </>
+    );
   };
 
   return (
@@ -174,7 +167,7 @@ export const PetDetail = () => {
                 </p>
               </div>
             </div>
-            <TooltipMap />
+            <NaverMap />
           </div>
         </li>
       </Info>
