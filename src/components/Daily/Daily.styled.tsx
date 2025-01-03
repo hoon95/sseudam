@@ -11,6 +11,7 @@ export const Container = styled.section`
     flex-direction: column;
     align-items: center;
     gap: calc(var(--gap) * 0.5);
+    padding-bottom: calc(var(--gap) * 3);
 
     & .title {
       color: var(--dark);

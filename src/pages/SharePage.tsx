@@ -1,7 +1,9 @@
+import { Share } from "@components/Share/share";
+
 export const SharePage = () => {
-  return(
+  return (
     <>
-      <p>Share</p>
+      <Share />
     </>
-  )
-}
+  );
+};

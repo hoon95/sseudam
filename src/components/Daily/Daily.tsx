@@ -1,3 +1,4 @@
+import { Youtube } from "@components/Share/share";
 import { Container } from "./Daily.styled";
 
 interface DailyProps {
@@ -11,6 +12,7 @@ export const Daily = (props: DailyProps) => {
         <p className="title">Daily Life</p>
         <p className="desc">반려동물과 함께하는 일상생활을 공유하세요</p>
       </div>
+      <Youtube />
     </Container>
   );
 };

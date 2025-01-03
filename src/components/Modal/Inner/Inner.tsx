@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Progress } from "./Progress";
-import { useModalStore } from "@store/store";
+import { useModalStore, useShareStore } from "@store/store";
 import { InnerResult, InnerStyle, KakaoInner } from "./Inner.styled";
 import { KakaoIcon } from "@components/Login/Login.styled";
 import testImg from "@assets/images/home/test.png";
@@ -71,6 +71,7 @@ export const Inner = () => {
   };
 
   const End = () => {
+    const { setKeyword } = useShareStore();
     const petBreed = { name: "", type: "", src: "" };
 
     if (finalResult <= 3) {
@@ -98,6 +99,10 @@ export const Inner = () => {
       petBreed.src =
         "https://dlwqrjdqoenwacpxpjiy.supabase.co/storage/v1/object/sign/kakao-share-images/retriever.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrYWthby1zaGFyZS1pbWFnZXMvcmV0cmlldmVyLnBuZyIsImlhdCI6MTczNTgwOTcxOSwiZXhwIjoxODkzNDg5NzE5fQ.iLFFh1QqSnC61eoWzxsBdt-pgO5B6ZlmQKwC9NfU3v8&t=2025-01-02T09%3A21%3A47.913Z";
     }
+
+    useEffect(() => {
+      setKeyword(petBreed.type);
+    }, [finalResult, setKeyword]);
 
     const KakaoShare = () => {
       // 카카오톡 공유하기
