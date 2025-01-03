@@ -3,6 +3,7 @@ import { loginWithGoogle, loginWithKakao } from "@services/auth";
 import { LoginContainer, KakaoIcon } from "./Login.styled";
 import { Sns } from "./Login.styled";
 import { Link } from "react-router-dom";
+import { AdminSignUp } from "@components/Login/Admin/Admin";
 
 // Icon Load
 import InstagramIcon from "@mui/icons-material/Instagram";
