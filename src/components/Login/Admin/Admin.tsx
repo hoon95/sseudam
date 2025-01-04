@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { supabase } from "@utils/supabaseClient";
 import { Link } from "react-router-dom";
 import { AdminForm } from "./Admin.styled";
+import uuid from "react-uuid";
 import {
   FormControl,
   Button,
@@ -103,7 +103,6 @@ export const AdminSignUp = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // 보호센터 목록을 가져오는 API 호출 (예: Supabase에서 센터 목록 가져오기)
     const fetchCenters = async () => {
       const { data, error } = await supabase.from("list").select("care_nm");
       const uniqueData = [
@@ -112,6 +111,7 @@ export const AdminSignUp = () => {
 
       if (error) {
         setError("Error fetching centers");
+        console.error(error);
       } else {
         setCenters(uniqueData);
       }
@@ -122,34 +122,37 @@ export const AdminSignUp = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!selectedCenter) {
-      setError("Please select a protection center.");
-      return;
-    }
-
-    // 관리자 계정 생성
     try {
       const { user, error } = await supabase.auth.signUp({
-        email,
-        password,
+        email: email,
+        password: password,
       });
 
-      if (error) {
-        setError(error.message);
-        return;
+      console.error(error);
+
+      if (error && error.message === "User already registered") {
+        setError("이미 등록된 유저입니다.");
       }
 
-      // 보호센터 정보와 함께 관리자의 데이터를 저장
-      const { error: insertError } = await supabase
-        .from("admins")
-        .insert([{ user_id: user?.id, center_id: selectedCenter }]);
+      console.log("유저: ", user);
 
-      if (insertError) {
-        setError("Error creating admin.");
-        return;
+      if (email && password && selectedCenter) {
+        const { error: insertError } = await supabase.from("admin").insert([
+          {
+            id: uuid(),
+            email: email,
+            password: password,
+            center: selectedCenter,
+          },
+        ]);
+
+        if (insertError) {
+          setError("Error INSERT admin.");
+          return;
+        }
+      } else if (!selectedCenter) {
+        setError("담당 센터를 골라주세요 😭");
       }
-
-      alert("관리자 계정이 생성되었습니다.");
     } catch (err) {
       console.error(err);
       setError("Error creating admin account.");
@@ -162,7 +165,7 @@ export const AdminSignUp = () => {
         <h2>쓰담</h2>
         <p>관리자 회원가입</p>
       </div>
-      <form onSubmit={handleSignUp}>
+      <form>
         <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="email">이메일</InputLabel>
           <Input
@@ -209,14 +212,20 @@ export const AdminSignUp = () => {
               보호센터 선택
             </MenuItem>
             {centers.map((center) => (
-              <MenuItem key={(center as any).id} value={center}>
+              <MenuItem key={center} value={center}>
                 {center}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
         <div className="bottom">
-          <Button type="submit" variant="contained" className="btn" fullWidth>
+          <Button
+            type="button"
+            onClick={handleSignUp}
+            variant="contained"
+            className="btn"
+            fullWidth
+          >
             회원가입
           </Button>
         </div>
