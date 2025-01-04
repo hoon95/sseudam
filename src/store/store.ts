@@ -64,7 +64,7 @@ interface locationState {
 
 interface shareState {
   keyword: string;
-  setKeyword: (type: string) => void;
+  setKeyword: (keyword: string) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -263,10 +263,11 @@ export const useShareStore = create<shareState>(
   persist(
     (set) => ({
       keyword: "강아지",
-      setKeyword: (type) => set({ keyword: type }),
+      setKeyword: (type: string) => set({ keyword: type }),
     }),
     {
       name: "share-store",
     },
-  ),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) as any,
 );

@@ -25,6 +25,31 @@ export const ShortList = styled.ul`
   gap: var(--gap);
   padding-bottom: calc(var(--gap) * 10);
 
+  li {
+    width: 20%;
+
+    img {
+      padding-bottom: calc(var(--gap) * 0.5);
+    }
+
+    img,
+    p {
+      width: 100%;
+    }
+
+    & .likeView {
+      display: flex;
+      padding-top: calc(var(--gap) * 0.3);
+      gap: calc(var(--gap) * 0.3);
+      & .like,
+      .view {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--gap) * 0.2);
+      }
+    }
+  }
+
   & .traffic {
     font-size: var(--text-md);
   }

@@ -102,7 +102,7 @@ export const Inner = () => {
 
     useEffect(() => {
       setKeyword(petBreed.type);
-    }, [finalResult, setKeyword]);
+    }, [petBreed.type, setKeyword]);
 
     const KakaoShare = () => {
       // 카카오톡 공유하기

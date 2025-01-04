@@ -59,7 +59,7 @@ export const PetDetail = () => {
       };
 
       fetchLocation();
-    }, [item.care_addr]);
+    }, []);
 
     // 지도 및 마커 생성
     useEffect(() => {

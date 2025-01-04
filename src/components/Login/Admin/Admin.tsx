@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { supabase } from "@utils/supabaseClient";
 import { Link } from "react-router-dom";
@@ -105,7 +106,9 @@ export const AdminSignUp = () => {
     // 보호센터 목록을 가져오는 API 호출 (예: Supabase에서 센터 목록 가져오기)
     const fetchCenters = async () => {
       const { data, error } = await supabase.from("list").select("care_nm");
-      const uniqueData = [...new Set(data.map((item: string) => item.care_nm))];
+      const uniqueData = [
+        ...new Set((data as { care_nm: string }[]).map((item) => item.care_nm)),
+      ];
 
       if (error) {
         setError("Error fetching centers");
@@ -148,6 +151,7 @@ export const AdminSignUp = () => {
 
       alert("관리자 계정이 생성되었습니다.");
     } catch (err) {
+      console.error(err);
       setError("Error creating admin account.");
     }
   };
@@ -205,7 +209,7 @@ export const AdminSignUp = () => {
               보호센터 선택
             </MenuItem>
             {centers.map((center) => (
-              <MenuItem key={center.id} value={center}>
+              <MenuItem key={(center as any).id} value={center}>
                 {center}
               </MenuItem>
             ))}
