@@ -68,4 +68,9 @@ export const AdminForm = styled.form`
   & .centerSelect {
     margin: var(--gap) 0;
   }
+
+  & .error {
+    color: var(--red);
+    padding-top: calc(var(--gap) * 0.5);
+  }
 `;

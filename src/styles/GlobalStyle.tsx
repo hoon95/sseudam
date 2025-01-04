@@ -20,6 +20,7 @@ export const GlobalStyle = () => (
         --dark: #231f1d;
         --gray: #b6b1a7;
         --yellow: #ffe835;
+        --red: #ff2400;
       }
 
       @font-face {

@@ -43,7 +43,7 @@ export const AdminLogin = () => {
         <h2>쓰담</h2>
         <p>관리자 로그인</p>
       </div>
-      <form onSubmit={handleLogin}>
+      <form>
         <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="email">이메일</InputLabel>
           <Input
@@ -86,7 +86,13 @@ export const AdminLogin = () => {
             </div>
             <Link to="./signup">관리자 계정 만들기</Link>
           </div>
-          <Button type="submit" variant="contained" className="btn" fullWidth>
+          <Button
+            type="button"
+            onClick={handleLogin}
+            variant="contained"
+            className="btn"
+            fullWidth
+          >
             로그인
           </Button>
         </div>
@@ -101,6 +107,9 @@ export const AdminSignUp = () => {
   const [selectedCenter, setSelectedCenter] = useState("");
   const [centers, setCenters] = useState<string[]>([]);
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [pwError, setPwError] = useState("");
+  const [centerError, setCenterError] = useState("");
 
   useEffect(() => {
     const fetchCenters = async () => {
@@ -122,40 +131,46 @@ export const AdminSignUp = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setEmailError(!email ? "이메일을 입력하세요" : "");
+    setPwError(
+      !password
+        ? "패스워드를 입력하세요"
+        : password.length < 6
+          ? "패스워드는 최소 6자 입력하세요"
+          : "",
+    );
+    setCenterError(!selectedCenter ? "담당 센터를 골라주세요 😭" : "");
+
     try {
-      const { user, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
 
-      console.error(error);
-
       if (error && error.message === "User already registered") {
-        setError("이미 등록된 유저입니다.");
+        console.error(error.message);
+        setError("이미 등록된 관리자입니다.");
+        return;
       }
 
-      console.log("유저: ", user);
+      const { error: insertError } = await supabase.from("admin").insert([
+        {
+          id: uuid(),
+          email: email,
+          center: selectedCenter,
+        },
+      ]);
 
-      if (email && password && selectedCenter) {
-        const { error: insertError } = await supabase.from("admin").insert([
-          {
-            id: uuid(),
-            email: email,
-            password: password,
-            center: selectedCenter,
-          },
-        ]);
-
-        if (insertError) {
-          setError("Error INSERT admin.");
-          return;
-        }
-      } else if (!selectedCenter) {
-        setError("담당 센터를 골라주세요 😭");
+      if (insertError) {
+        console.error(insertError);
+        return;
       }
+
+      await supabase.auth.signOut();
+      alert("회원가입이 완료되었습니다!");
+      window.location.href = "../";
     } catch (err) {
       console.error(err);
-      setError("Error creating admin account.");
     }
   };
 
@@ -173,7 +188,10 @@ export const AdminSignUp = () => {
             id="email"
             placeholder="email@email.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError("");
+            }}
             autoComplete="off"
             required
             startAdornment={
@@ -182,6 +200,9 @@ export const AdminSignUp = () => {
               </InputAdornment>
             }
           />
+          {emailError && emailError.length > 0 && (
+            <p className="error">{emailError}</p>
+          )}
         </FormControl>
         <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="password">비밀번호</InputLabel>
@@ -190,7 +211,10 @@ export const AdminSignUp = () => {
             id="password"
             placeholder="********"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPwError("");
+            }}
             required
             startAdornment={
               <InputAdornment position="start">
@@ -198,6 +222,7 @@ export const AdminSignUp = () => {
               </InputAdornment>
             }
           />
+          {pwError && pwError.length > 0 && <p className="error">{pwError}</p>}
         </FormControl>
         <FormControl fullWidth margin="normal" className="centerSelect">
           <InputLabel id="center-select">보호센터 선택</InputLabel>
@@ -205,7 +230,10 @@ export const AdminSignUp = () => {
             label="보호센터 선택"
             labelId="center-select"
             value={selectedCenter}
-            onChange={(e) => setSelectedCenter(e.target.value)}
+            onChange={(e) => {
+              setSelectedCenter(e.target.value);
+              setCenterError("");
+            }}
             required
           >
             <MenuItem value="" disabled>
@@ -217,6 +245,9 @@ export const AdminSignUp = () => {
               </MenuItem>
             ))}
           </Select>
+          {centerError && centerError.length > 0 && (
+            <p className="error">{centerError}</p>
+          )}
         </FormControl>
         <div className="bottom">
           <Button
@@ -230,7 +261,7 @@ export const AdminSignUp = () => {
           </Button>
         </div>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
     </AdminForm>
   );
 };
