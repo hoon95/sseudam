@@ -20,7 +20,7 @@ export const Youtube = () => {
   const { keyword } = useShareStore();
 
   const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
-  const query = `${keyword} shorts`;
+  const query = `${keyword}`;
   const maxResults = 4;
 
   const fetchShortsVideos = async () => {
