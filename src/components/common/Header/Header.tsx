@@ -44,7 +44,13 @@ const HeaderList = () => {
             user.user_metadata?.full_name,
           );
           setRecentSns(user.app_metadata?.provider);
+
+          if (user.app_metadata.provider === "email") {
+            setUserData(true, null, "관리자");
+          }
         }
+
+        console.log("user 정보: ", user);
       } catch (err) {
         console.error(err);
       }

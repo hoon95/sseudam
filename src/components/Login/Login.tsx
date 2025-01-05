@@ -1,5 +1,5 @@
 import { useUserStore } from "@store/store";
-import { loginWithGoogle, loginWithKakao } from "@services/auth";
+import { loginWithSns } from "@services/auth";
 import { LoginContainer, KakaoIcon } from "./Login.styled";
 import { Sns } from "./Login.styled";
 import { Link } from "react-router-dom";
@@ -12,16 +12,14 @@ import { Tooltip } from "@mui/material";
 const SnsLogin = async (sns: string) => {
   try {
     if (sns === "kakao") {
-      await loginWithKakao();
+      await loginWithSns("kakao");
     } else if (sns === "google") {
-      await loginWithGoogle();
+      await loginWithSns("google");
     }
-    alert("Success");
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error(err.message);
     }
-    alert("Failed to Login");
   }
 };
 

@@ -47,6 +47,9 @@ export const GlobalStyle = () => (
       }
 
       /* Login - Tooltip */
+      & .MuiPopper-root {
+        z-index: 999 !important;
+      }
       & .MuiTooltip-tooltip {
         background: var(--main) !important;
         padding: calc(var(--gap) * 0.5) !important;

@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.header`
+  & .MuiPaper-root {
+    z-index: 999;
+  }
+
   & .box {
     width: 100%;
     max-width: 1280px;

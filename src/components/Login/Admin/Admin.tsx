@@ -24,17 +24,29 @@ export const AdminLogin = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { user, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error) {
-      setErrorMessage(error.message);
-      console.error("Error logging in:", error.message);
+      if (error.message === "Invalid login credentials") {
+        setErrorMessage("이메일 또는 비밀번호를 확인하세요");
+        console.error("Error logging in:", error.message);
+      }
     } else {
-      console.log("User logged in:", user);
-      alert("로그인 성공!");
+      Swal.fire({
+        icon: "success",
+        title: "로그인 성공",
+        text: "관리자님 반갑습니다!",
+        timer: 5000,
+        customClass: {
+          icon: "alertIcon",
+        },
+        confirmButtonColor: "var(--main)",
+      }).then(() => {
+        window.location.href = "/";
+      });
     }
   };
 
@@ -78,7 +90,7 @@ export const AdminLogin = () => {
             }
           />
         </FormControl>
-        {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+        {errorMessage && <p className="error">{errorMessage}</p>}
         <div className="bottom">
           <div className="text">
             <div className="save">
