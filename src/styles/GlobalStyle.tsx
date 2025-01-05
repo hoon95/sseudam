@@ -66,6 +66,20 @@ export const GlobalStyle = () => (
       & .MuiPagination-ul {
         justify-content: center;
       }
+
+      /* Admin - 관리자 등록하기 */
+      & .alertIcon {
+        margin: calc(var(--gap) * 2) auto;
+      }
+
+      .swal2-container {
+        overflow: visible;
+      }
+
+      & .customToast {
+        color: var(--dark);
+        bottom: calc(var(--gap) * 5);
+      }
     `}
   />
 );

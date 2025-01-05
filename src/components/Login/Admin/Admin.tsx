@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "@utils/supabaseClient";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AdminForm } from "./Admin.styled";
 import uuid from "react-uuid";
+import Swal from "sweetalert2";
 import {
   FormControl,
   Button,
@@ -106,10 +107,11 @@ export const AdminSignUp = () => {
   const [password, setPassword] = useState("");
   const [selectedCenter, setSelectedCenter] = useState("");
   const [centers, setCenters] = useState<string[]>([]);
-  const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [pwError, setPwError] = useState("");
   const [centerError, setCenterError] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCenters = async () => {
@@ -119,7 +121,6 @@ export const AdminSignUp = () => {
       ];
 
       if (error) {
-        setError("Error fetching centers");
         console.error(error);
       } else {
         setCenters(uniqueData);
@@ -139,7 +140,11 @@ export const AdminSignUp = () => {
           ? "패스워드는 최소 6자 입력하세요"
           : "",
     );
-    setCenterError(!selectedCenter ? "담당 센터를 골라주세요 😭" : "");
+    setCenterError(!selectedCenter ? "담당 센터를 골라주세요" : "");
+
+    if (!email || !password || password.length < 6 || !selectedCenter) {
+      return;
+    }
 
     try {
       const { error } = await supabase.auth.signUp({
@@ -149,7 +154,19 @@ export const AdminSignUp = () => {
 
       if (error && error.message === "User already registered") {
         console.error(error.message);
-        setError("이미 등록된 관리자입니다.");
+
+        Swal.fire({
+          position: "bottom",
+          toast: true,
+          title: "이미 등록된 관리자입니다",
+          text: "이메일을 확인해주세요 🥲",
+          customClass: {
+            icon: "alertIcon",
+            popup: "customToast",
+          },
+          confirmButtonColor: "var(--main)",
+        });
+
         return;
       }
 
@@ -167,8 +184,19 @@ export const AdminSignUp = () => {
       }
 
       await supabase.auth.signOut();
-      alert("회원가입이 완료되었습니다!");
-      window.location.href = "../";
+
+      Swal.fire({
+        icon: "success",
+        title: "관리자 등록 완료",
+        text: "등록이 완료되었습니다!",
+        // timer: 5000,
+        customClass: {
+          icon: "alertIcon",
+        },
+        confirmButtonColor: "var(--main)",
+      }).then(() => {
+        navigate("/login/admin");
+      });
     } catch (err) {
       console.error(err);
     }
@@ -178,7 +206,7 @@ export const AdminSignUp = () => {
     <AdminForm>
       <div className="title">
         <h2>쓰담</h2>
-        <p>관리자 회원가입</p>
+        <p>관리자 등록하기</p>
       </div>
       <form>
         <FormControl fullWidth margin="normal">
@@ -257,11 +285,10 @@ export const AdminSignUp = () => {
             className="btn"
             fullWidth
           >
-            회원가입
+            등록하기
           </Button>
         </div>
       </form>
-      {error && <p className="error">{error}</p>}
     </AdminForm>
   );
 };
