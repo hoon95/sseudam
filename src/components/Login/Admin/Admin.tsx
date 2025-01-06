@@ -3,6 +3,7 @@ import { supabase } from "@utils/supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { AdminForm } from "./Admin.styled";
 import { useRememberStore } from "@store/store";
+import { getAdminUser } from "@services/auth";
 import uuid from "react-uuid";
 import Swal from "sweetalert2";
 import {
@@ -182,8 +183,41 @@ export const AdminSignUp = () => {
     fetchCenters();
   }, []);
 
+  const checkCenter = async (centerName: string) => {
+    const { adminUser, adminError } = await getAdminUser();
+
+    if (adminError) {
+      console.error("데이터 로드 오류:", adminError);
+      return false;
+    }
+
+    const userWithCenter = adminUser.find((user) => user.center === centerName);
+
+    if (userWithCenter && userWithCenter.center === selectedCenter) {
+      Swal.fire({
+        position: "bottom",
+        toast: true,
+        title: "이미 등록된 센터입니다",
+        text: "관리자에게 문의해주세요 🥲",
+        customClass: {
+          icon: "alertIcon",
+          popup: "customToast",
+        },
+        confirmButtonColor: "var(--main)",
+      });
+
+      return true;
+    }
+    return false;
+  };
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const isCenterRegistered = await checkCenter(selectedCenter);
+    if (isCenterRegistered) {
+      return;
+    }
 
     setEmailError(!email ? "이메일을 입력하세요" : "");
     setPwError(
@@ -198,6 +232,8 @@ export const AdminSignUp = () => {
     if (!email || !password || password.length < 6 || !selectedCenter) {
       return;
     }
+
+    checkCenter(selectedCenter);
 
     try {
       const { error } = await supabase.auth.signUp({

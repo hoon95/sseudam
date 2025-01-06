@@ -43,3 +43,11 @@ export const getCurrentUser = async () => {
   if (error) throw new Error("사용자 정보 가져오기 실패: " + error.message);
   return user;
 };
+
+export const getAdminUser = async () => {
+  const { data: adminUser, error: adminError } = await supabase
+    .from("admin")
+    .select("*");
+
+  return { adminUser, adminError };
+};
