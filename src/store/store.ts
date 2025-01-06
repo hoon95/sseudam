@@ -21,6 +21,7 @@ interface QnA {
 
 interface ModalState {
   open: boolean;
+  currentModalId: number | null;
   currentQuestion: number;
   progress: number;
   quizStart: boolean;
@@ -29,7 +30,7 @@ interface ModalState {
   setAnimal: (animal: number) => void;
   setFinalResult: (result: number) => void;
   qna: QnA[];
-  setOpen: (open: boolean) => void;
+  setOpen: (open: boolean, currentModalId: number | null) => void;
   handleNextQuestion: (selectedWeight: number) => void;
   finalResult: number;
   resetModal: () => void;
@@ -95,6 +96,7 @@ export const useModalProgress = () => useModalStore((state) => state.progress);
 
 export const useModalStore = create<ModalState>((set) => ({
   open: false,
+  currentModalId: null,
   currentQuestion: 0,
   progress: 0,
   quizStart: true,
@@ -208,7 +210,7 @@ export const useModalStore = create<ModalState>((set) => ({
       ],
     },
   ],
-  setOpen: (open) => set({ open }),
+  setOpen: (open, modalId) => set({ open, currentModalId: modalId }),
   handleNextQuestion: (weight) =>
     set((state) => {
       state.animal += weight;
@@ -226,6 +228,7 @@ export const useModalStore = create<ModalState>((set) => ({
       currentQuestion: 0,
       progress: 0,
       open: false,
+      currentModalId: null,
       quizStart: true,
       animal: 0,
       finalResult: 0,
@@ -285,3 +288,5 @@ export const useRememberStore = create(
     },
   ),
 );
+
+export const useShortsStore = create();

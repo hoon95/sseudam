@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useShareStore } from "@store/store";
 import { useState, useEffect, useCallback } from "react";
+import { useShareStore } from "@store/store";
+import { ShortsModal } from "@components/Modal/Modal";
 import { ShortList, Title } from "./Share.styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -145,42 +146,31 @@ export const Youtube = () => {
 
   console.log(shorts);
 
-  // const shortsModal = () => {
-  //   return(
-  //     <Modal
-  //       aria-labelledby="modal-modal-title"
-  //       aria-describedby="modal-modal-description"
-  //       className="modalContainer"
-  //     />
-  //   )
-  // }
-
   return (
     <ShortList>
       {shorts.length > 0 ? (
         shorts.map((video) => (
           <li key={video.id.videoId}>
-            <a
-              href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={video.snippet.thumbnails.medium.url}
-                alt={video.snippet.title}
-              />
-              <p>{video.snippet.title}</p>
-              <div className="likeView">
-                <div className="like">
-                  <ThumbUpIcon />
-                  <p>{`${video.statistics.likeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
-                </div>
-                <div className="view">
-                  <VisibilityIcon />
-                  <p>{`${video.statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
-                </div>
+            <ShortsModal
+              videoId={video.id.videoId}
+              img={video.snippet.thumbnails.medium.url}
+              title={video.snippet.title}
+            />
+            <img
+              src={video.snippet.thumbnails.medium.url}
+              alt={video.snippet.title}
+            />
+            <p>{video.snippet.title}</p>
+            <div className="likeView">
+              <div className="like">
+                <ThumbUpIcon />
+                <p>{`${video.statistics.likeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
               </div>
-            </a>
+              <div className="view">
+                <VisibilityIcon />
+                <p>{`${video.statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
+              </div>
+            </div>
           </li>
         ))
       ) : (

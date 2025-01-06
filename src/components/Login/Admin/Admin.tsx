@@ -191,7 +191,9 @@ export const AdminSignUp = () => {
       return false;
     }
 
-    const userWithCenter = adminUser.find((user) => user.center === centerName);
+    const userWithCenter = adminUser.find(
+      (user: { center: string }) => user.center === centerName,
+    );
 
     if (userWithCenter && userWithCenter.center === selectedCenter) {
       Swal.fire({
