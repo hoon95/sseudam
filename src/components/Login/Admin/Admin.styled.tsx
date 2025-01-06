@@ -47,12 +47,6 @@ export const AdminForm = styled.form`
       align-items: center;
       padding: var(--gap) 0;
 
-      & .save {
-        display: flex;
-        align-items: center;
-        gap: calc(var(--gap) * 0.2);
-      }
-
       a {
         color: var(--gray);
         text-decoration: underline;

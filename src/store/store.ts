@@ -271,3 +271,17 @@ export const useShareStore = create<shareState>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ) as any,
 );
+
+export const useRememberStore = create(
+  persist(
+    (set) => ({
+      checked: false,
+      setChecked: (check: boolean) => set({ checked: check }),
+      remember: "",
+      setRemember: (email: string) => set({ remember: email }),
+    }),
+    {
+      name: "remember-store",
+    },
+  ),
+);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "@utils/supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { AdminForm } from "./Admin.styled";
+import { useRememberStore } from "@store/store";
 import uuid from "react-uuid";
 import Swal from "sweetalert2";
 import {
@@ -12,14 +13,23 @@ import {
   InputAdornment,
   Select,
   MenuItem,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  IconButton,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 export const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { checked, setChecked } = useRememberStore();
+  const { remember, setRemember } = useRememberStore();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,9 +55,29 @@ export const AdminLogin = () => {
         },
         confirmButtonColor: "var(--main)",
       }).then(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        checked ? setRemember(email) : setRemember("");
         window.location.href = "/";
       });
     }
+  };
+
+  useEffect(() => {
+    if (remember) {
+      setEmail(remember);
+    }
+  }, [remember]);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleViewPw = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleCheck = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    const isChecked = target.checked;
+    setChecked(isChecked);
   };
 
   return (
@@ -77,7 +107,7 @@ export const AdminLogin = () => {
         <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="password">비밀번호</InputLabel>
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             placeholder="********"
             value={password}
@@ -88,15 +118,26 @@ export const AdminLogin = () => {
                 <LockIcon />
               </InputAdornment>
             }
+            endAdornment={
+              <InputAdornment position="end" aria-label="비밀번호 표시">
+                <IconButton onClick={handleViewPw} edge="end">
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
         </FormControl>
         {errorMessage && <p className="error">{errorMessage}</p>}
         <div className="bottom">
           <div className="text">
-            <div className="save">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">로그인 유지하기</label>
-            </div>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox />}
+                onChange={handleCheck}
+                checked={checked}
+                label="아이디 저장"
+              />
+            </FormGroup>
             <Link to="./signup">관리자 계정 만들기</Link>
           </div>
           <Button
@@ -201,7 +242,6 @@ export const AdminSignUp = () => {
         icon: "success",
         title: "관리자 등록 완료",
         text: "등록이 완료되었습니다!",
-        // timer: 5000,
         customClass: {
           icon: "alertIcon",
         },
