@@ -68,6 +68,11 @@ interface shareState {
   setKeyword: (keyword: string) => void;
 }
 
+interface ShortsState {
+  openVideoId: string | null;
+  setOpenVideoId: (videoId: string | null) => void;
+}
+
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
@@ -289,4 +294,7 @@ export const useRememberStore = create(
   ),
 );
 
-export const useShortsStore = create();
+export const useShortsStore = create<ShortsState>((set) => ({
+  openVideoId: null,
+  setOpenVideoId: (videoId) => set({ openVideoId: videoId }),
+}));

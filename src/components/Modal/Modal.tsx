@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Inner } from "./Inner/Inner";
 import { ShortsInnerStyle } from "./Inner/Inner.styled";
-import { useModalStore } from "@store/store";
+import { useModalStore, useShortsStore } from "@store/store";
 import { Btn, VideoContainer, Camera, Wifi, Battery } from "./Modal.styled";
 import { Modal, Button, Box } from "@mui/material";
 import WifiIcon from "@mui/icons-material/Wifi";
@@ -38,21 +37,17 @@ interface ShortsType {
 }
 
 export const ShortsModal = ({ videoId }: ShortsType) => {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { openVideoId, setOpenVideoId } = useShortsStore();
+  const closeModal = () =>
+    setTimeout(() => {
+      setOpenVideoId(null);
+    }, 10);
 
   return (
     <Btn>
-      <Button onClick={handleOpen}>click</Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openVideoId === videoId}
+        onClose={closeModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         className="modalContainer"

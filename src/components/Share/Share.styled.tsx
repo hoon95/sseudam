@@ -27,6 +27,7 @@ export const ShortList = styled.ul`
 
   li {
     width: 20%;
+    cursor: pointer;
 
     img {
       padding-bottom: calc(var(--gap) * 0.5);

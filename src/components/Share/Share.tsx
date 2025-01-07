@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback } from "react";
-import { useShareStore } from "@store/store";
+import { useShareStore, useShortsStore } from "@store/store";
 import { ShortsModal } from "@components/Modal/Modal";
 import { ShortList, Title } from "./Share.styled";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -33,6 +33,7 @@ export const Youtube = () => {
 
   const [shorts, setShorts] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
+  const { setOpenVideoId } = useShortsStore();
 
   const getCachedVideos = useCallback(() => {
     const cachedData = localStorage.getItem(`shorts_${query}`);
@@ -148,17 +149,15 @@ export const Youtube = () => {
     const commaString = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return commaString;
   };
-
   return (
     <ShortList>
       {shorts.length > 0 ? (
         shorts.map((video) => (
-          <li key={video.id.videoId}>
-            <ShortsModal
-              videoId={video.id.videoId}
-              img={video.snippet.thumbnails.medium.url}
-              title={video.snippet.title}
-            />
+          <li
+            key={video.id.videoId}
+            onClick={() => setOpenVideoId(video.id.videoId)}
+          >
+            <ShortsModal videoId={video.id.videoId} />
             <img
               src={video.snippet.thumbnails.medium.url}
               alt={video.snippet.title}
