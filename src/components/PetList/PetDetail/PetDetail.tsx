@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { fetchDetail } from "@apis/supabase";
 import { NaverMapLoader, getCoordinates } from "@apis/map";
-import { useEffect, useState } from "react";
 
 import { Button, Divider, Tooltip } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
