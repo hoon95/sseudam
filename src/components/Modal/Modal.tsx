@@ -1,9 +1,11 @@
-import { Modal, Button, Box, Typography } from "@mui/material";
-import { Inner } from "./Inner/Inner";
-import { InnerStyle } from "./Inner/Inner.styled";
-import { useModalStore } from "@store/store";
-import { Btn } from "./Modal.styled";
 import { useState } from "react";
+import { Inner } from "./Inner/Inner";
+import { ShortsInnerStyle } from "./Inner/Inner.styled";
+import { useModalStore } from "@store/store";
+import { Btn, VideoContainer, Camera, Wifi, Battery } from "./Modal.styled";
+import { Modal, Button, Box } from "@mui/material";
+import WifiIcon from "@mui/icons-material/Wifi";
+import Battery50Icon from "@mui/icons-material/Battery50";
 
 export const ButtonModal = () => {
   const { open, setOpen, resetModal } = useModalStore();
@@ -23,13 +25,19 @@ export const ButtonModal = () => {
         aria-describedby="modal-modal-description"
         className="modalContainer"
       >
-        <Inner />
+        <>
+          <Inner />
+        </>
       </Modal>
     </Btn>
   );
 };
 
-export const ShortsModal = ({ videoId, img, title }) => {
+interface ShortsType {
+  videoId: string;
+}
+
+export const ShortsModal = ({ videoId }: ShortsType) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -49,9 +57,19 @@ export const ShortsModal = ({ videoId, img, title }) => {
         aria-describedby="modal-modal-description"
         className="modalContainer"
       >
-        <Box sx={InnerStyle}>
-          <iframe src={`https://www.youtube.com/embed/${videoId}`}></iframe>
-          <Typography>{title}</Typography>
+        <Box sx={ShortsInnerStyle}>
+          <VideoContainer>
+            <Camera />
+            <WifiIcon sx={Wifi} />
+            <Battery50Icon sx={Battery} />
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}?feature=shorts&autoplay=1&showinfo=0`}
+              title="YouTube Shorts"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </VideoContainer>
         </Box>
       </Modal>
     </Btn>

@@ -39,8 +39,7 @@ export const logout = async () => {
 };
 
 export const getCurrentUser = async () => {
-  const { data: user, error } = await supabase.auth.getUser();
-  if (error) throw new Error("사용자 정보 가져오기 실패: " + error.message);
+  const { data: user } = await supabase.auth.getUser();
   return user;
 };
 

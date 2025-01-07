@@ -144,7 +144,10 @@ export const Youtube = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(shorts);
+  const handleComma = (count: number | string) => {
+    const commaString = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return commaString;
+  };
 
   return (
     <ShortList>
@@ -164,11 +167,11 @@ export const Youtube = () => {
             <div className="likeView">
               <div className="like">
                 <ThumbUpIcon />
-                <p>{`${video.statistics.likeCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
+                <p>{handleComma(video.statistics.likeCount)}</p>
               </div>
               <div className="view">
                 <VisibilityIcon />
-                <p>{`${video.statistics.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
+                <p>{handleComma(video.statistics.viewCount)}</p>
               </div>
             </div>
           </li>

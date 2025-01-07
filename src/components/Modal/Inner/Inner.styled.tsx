@@ -1,6 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
+
 import styled from "@emotion/styled";
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const InnerStyle = {
   position: "absolute",
   top: "50%",
@@ -34,6 +35,23 @@ export const InnerStyle = {
     fontSize: "var(--text-sm)",
     color: "var(--dark)",
   },
+};
+
+export const ShortsInnerStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "#000",
+  width: "25vw",
+  p: 4,
+  border: "1px solid var(--light)",
+  borderRadius: "var(--gap)",
+  boxShadow: "3px 3px 3px #666",
+
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 };
 
 export const InnerResult = styled.div`

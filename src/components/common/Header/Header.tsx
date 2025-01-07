@@ -49,8 +49,6 @@ const HeaderList = () => {
             setUserData(true, null, "관리자");
           }
         }
-
-        console.log("user 정보: ", user);
       } catch (err) {
         console.error(err);
       }
