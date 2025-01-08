@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { sendMessage, fetchMessage, subscribeToMessage } from "./ChatService";
 import { Button, Typography, OutlinedInput } from "@mui/material";
 import { Chatting, Msg } from "./Chat.styled";
-import { getCurrentUser } from "@services/auth";
+import { getCurrentUser, getAdminUser } from "@services/auth";
 
 export const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState("");
+  const [currentAdmin, setCurrentAdmin] = useState("");
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
@@ -21,21 +22,30 @@ export const Chat = () => {
     fetchCurrentUser();
   }, []);
 
+  useEffect(() => {
+    if (currentUser) {
+      const fetchAdminUser = async () => {
+        const { adminUser } = await getAdminUser(currentUser.id);
+        setCurrentAdmin(adminUser);
+      };
+
+      fetchAdminUser();
+    }
+  }, [currentUser]);
+
   const handleSendMessage = async () => {
     if (message.trim() !== "") {
       const user = await getCurrentUser();
 
       await sendMessage(
         user.user.id,
-        user.user.user_metadata.name || "관리자",
+        user.user.user_metadata.name || currentAdmin[0].center,
         "메세지 받는사람",
         message,
       );
       setMessage("");
     }
   };
-
-  console.log(currentUser);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.nativeEvent.isComposing) {
@@ -83,9 +93,15 @@ export const Chat = () => {
     <Chatting>
       <Typography className="title">실시간 채팅</Typography>
       <div className="msgContainer" ref={messageContainerRef}>
-        <p className="enter">{currentUser.email}님이 입장하였습니다</p>
+        {/* <p className="enter">
+          {currentAdmin[0].center}
+          님이 입장하였습니다
+        </p> */}
         {messages.map((item, index) => (
-          <Msg key={index}>
+          <Msg
+            key={index}
+            className={item.sender_id === currentUser?.id ? "receiveUser" : ""}
+          >
             <p className="message">
               {item.sender_name}: {item.content}
             </p>

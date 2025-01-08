@@ -43,10 +43,22 @@ export const getCurrentUser = async () => {
   return user;
 };
 
-export const getAdminUser = async () => {
-  const { data: adminUser, error: adminError } = await supabase
-    .from("admin")
-    .select("*");
+// export const getAdminUser = async (id: string) => {
+//   const { data: adminUser, error: adminError } = await supabase
+//     .from("admin")
+//     .select("*");
+
+//   return { adminUser, adminError };
+// };
+
+export const getAdminUser = async (id?: string) => {
+  const query = supabase.from("admin").select("*");
+
+  if (id) {
+    query.eq("id", id);
+  }
+
+  const { data: adminUser, error: adminError } = await query;
 
   return { adminUser, adminError };
 };

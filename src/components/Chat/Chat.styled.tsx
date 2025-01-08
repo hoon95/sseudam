@@ -40,11 +40,20 @@ export const Chatting = styled.div`
 
 export const Msg = styled.div`
   display: flex;
+  justify-content: start;
   align-items: end;
   margin-bottom: calc(var(--gap) * 0.5);
 
+  &.receiveUser {
+    justify-content: end;
+
+    & .message {
+      background: var(--yellow);
+    }
+  }
+
   & .message {
-    background: var(--yellow);
+    background: var(--light);
     padding: calc(var(--gap) * 0.5);
     border-radius: calc(var(--gap) * 0.5);
   }

@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AdminForm } from "./Admin.styled";
 import { useRememberStore } from "@store/store";
 import { getAdminUser } from "@services/auth";
-import uuid from "react-uuid";
 import Swal from "sweetalert2";
 import {
   FormControl,
@@ -238,12 +237,10 @@ export const AdminSignUp = () => {
     checkCenter(selectedCenter);
 
     try {
-      const { user, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
-
-      console.log(user);
 
       if (error && error.message === "User already registered") {
         console.error(error.message);
@@ -263,9 +260,11 @@ export const AdminSignUp = () => {
         return;
       }
 
+      const response = await supabase.auth.getUser();
+
       const { error: insertError } = await supabase.from("admin").insert([
         {
-          id: uuid(),
+          id: response.data.user.id,
           email: email,
           center: selectedCenter,
         },
