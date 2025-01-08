@@ -7,7 +7,7 @@ export const Chatting = styled.div`
   display: flex;
   flex-direction: column;
   margin: calc(var(--gap) * 5) auto;
-  padding: var(--gap);
+  padding: calc(var(--gap) * 3) var(--gap);
   background: #abc0d0;
 
   & .title {

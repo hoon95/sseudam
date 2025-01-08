@@ -238,10 +238,12 @@ export const AdminSignUp = () => {
     checkCenter(selectedCenter);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { user, error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
+
+      console.log(user);
 
       if (error && error.message === "User already registered") {
         console.error(error.message);
