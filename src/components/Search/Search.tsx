@@ -10,7 +10,8 @@ import { Filter } from "@components/Filter/Filter";
 import { PetList } from "@components/PetList/PetList";
 import { Paging } from "@components/Paging/Paging";
 import { useEffect } from "react";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { List } from "../PetList/PetList.styled";
 // import { fetchAPI } from "@apis/pet";
 // import { fetchPetData } from "@apis/pet";
 
@@ -25,7 +26,7 @@ export const Search = () => {
   }, []);
 
   // List 조회
-  const { data, isLoading, error } = useQuery({
+  const { status, data, error } = useQuery({
     queryKey: [
       "petData",
       "list",
@@ -48,22 +49,29 @@ export const Search = () => {
       ),
   });
 
-  if (isLoading) {
-    return (
-      <Box sx={{ display: "flex" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-  if (error) return <p>Error...</p>;
-  if (!data) return <p>No data available</p>;
+  console.log(status);
+
+  // if (isLoading) {
+  //   return (
+  //     <Box sx={{ display: "flex" }}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
+  // if (error) return <p>Error...</p>;
+  // if (!data) return <p>No data available</p>;
 
   // Pagination
   const itemsPerPage = 20;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  let totalPages = 0;
+  let startIndex = 0;
+  let paginatedData = [];
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+  if (status === "success") {
+    totalPages = Math.ceil(data.length / itemsPerPage);
+    startIndex = (page - 1) * itemsPerPage;
+    paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+  }
 
   return (
     <>
@@ -72,7 +80,28 @@ export const Search = () => {
       </Banner>
       <Container>
         <Filter type={type} setType={setType} />
-        <PetList data={paginatedData} type={type} age={age} weight={weight} />
+        {/* <List>
+          {[...Array(4)].map((_, index) => (
+            <>
+              <Skeleton variant="rectangular" className="card" height={"50%"} />
+            </>
+          ))}
+        </List> */}
+        {status === "pending" || error || !data ? (
+          <List>
+            {[...Array(4)].map((_, index) => (
+              <>
+                <Skeleton
+                  variant="rectangular"
+                  className="card"
+                  height={"50%"}
+                />
+              </>
+            ))}
+          </List>
+        ) : (
+          <PetList data={paginatedData} type={type} age={age} weight={weight} />
+        )}
       </Container>
       <PagingLeft>
         <div className="inner"></div>

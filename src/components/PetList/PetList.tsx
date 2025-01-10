@@ -1,4 +1,3 @@
-// PetList.tsx
 import { Card, CardContent, Typography, Avatar } from "@mui/material";
 import { List, EmptyList } from "./PetList.styled";
 import { Link } from "react-router-dom";
