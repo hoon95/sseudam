@@ -84,6 +84,14 @@ const HeaderList = () => {
           일상 공유
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/test"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          취향 테스트
+        </NavLink>
+      </li>
       <li className="login">
         {userLogin ? (
           <>

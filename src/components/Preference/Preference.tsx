@@ -24,7 +24,7 @@ export const Preference = () => {
             <p>입니다</p>
           </div>
 
-          <p>나에게 맞는 반려동물을 AI가 추천해줄게요!</p>
+          <p>나만의 반려동물 취향을 확인하고 주변에 공유해보세요!</p>
         </Cursor>
         <ButtonModal />
       </Prefer>

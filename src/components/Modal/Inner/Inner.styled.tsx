@@ -43,7 +43,7 @@ export const ShortsInnerStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "#000",
-  width: "25vw",
+  width: "20vw",
   p: 4,
   border: "1px solid var(--light)",
   borderRadius: "var(--gap)",
@@ -77,4 +77,27 @@ export const KakaoInner = styled.div`
   border-radius: calc(var(--gap) * 0.5);
   padding: calc(var(--gap) * 0.5) var(--gap);
   background: var(--yellow);
+`;
+
+export const Personality = styled.ul`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 0.5);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--gap) * 0.5);
+
+    p {
+      font-size: var(--text-sm) !important;
+    }
+
+    & .progress {
+      width: 80%;
+      height: calc(var(--gap) * 0.5);
+      border-radius: calc(var(--gap) * 0.3);
+    }
+  }
 `;

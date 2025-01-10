@@ -10,7 +10,7 @@ import { Filter } from "@components/Filter/Filter";
 import { PetList } from "@components/PetList/PetList";
 import { Paging } from "@components/Paging/Paging";
 import { useEffect } from "react";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { List } from "../PetList/PetList.styled";
 // import { fetchAPI } from "@apis/pet";
 // import { fetchPetData } from "@apis/pet";
@@ -80,21 +80,20 @@ export const Search = () => {
       </Banner>
       <Container>
         <Filter type={type} setType={setType} />
-        {/* <List>
-          {[...Array(4)].map((_, index) => (
-            <>
-              <Skeleton variant="rectangular" className="card" height={"50%"} />
-            </>
-          ))}
-        </List> */}
         {status === "pending" || error || !data ? (
           <List>
             {[...Array(4)].map((_, index) => (
               <>
                 <Skeleton
+                  key={index}
                   variant="rectangular"
                   className="card"
-                  height={"50%"}
+                  height={"60%"}
+                />
+                <Skeleton
+                  variant="rectangular"
+                  className="card"
+                  height={"60%"}
                 />
               </>
             ))}

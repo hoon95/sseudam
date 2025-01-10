@@ -33,6 +33,7 @@ export const Footer = () => {
           <FooterLink>
             <Link to="/search">반려동물 찾기</Link>
             <Link to="/share">일상 공유</Link>
+            <Link to="/test">취향 테스트</Link>
           </FooterLink>
           <SnsIcon>
             <YouTubeIcon />
