@@ -1,5 +1,18 @@
 import styled from "@emotion/styled";
 
+export const Chatroom = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 2);
+  cursor: pointer;
+
+  li {
+    font-size: var(--text-md);
+    border-bottom: 1px solid var(--dark);
+    padding: var(--gap);
+  }
+`;
+
 export const Chatting = styled.div`
   position: relative;
   width: 80vw;
@@ -9,6 +22,10 @@ export const Chatting = styled.div`
   margin: calc(var(--gap) * 5) auto;
   padding: calc(var(--gap) * 3) var(--gap);
   background: #abc0d0;
+
+  & .back {
+    cursor: pointer;
+  }
 
   & .title {
     font-size: var(--gap);

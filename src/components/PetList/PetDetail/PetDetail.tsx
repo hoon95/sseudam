@@ -21,7 +21,7 @@ import {
 
 export const PetDetail = () => {
   const { userid, recentSns } = useUserStore();
-  const { setChatAdminUser } = useChatStore();
+  const { setOpen, setChatAdminUser } = useChatStore();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -36,6 +36,7 @@ export const PetDetail = () => {
 
   const handleChatAdmin = (admin: string) => {
     setChatAdminUser(admin);
+    setOpen(true);
     navigate("/chat");
   };
 
@@ -96,9 +97,6 @@ export const PetDetail = () => {
     );
   };
 
-  console.log("sns", recentSns);
-  console.log("item", item);
-
   return (
     <Detail>
       <img src={item.popfile} alt="" />
@@ -129,7 +127,9 @@ export const PetDetail = () => {
         <BtnContainer>
           {recentSns !== "email" && (
             <Button
-              onClick={() => handleChatAdmin(`${item.care_nm}-${userid}`)}
+              onClick={() => {
+                handleChatAdmin(`${item.care_nm}-${userid}`);
+              }}
               variant="contained"
               color="success"
             >

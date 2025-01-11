@@ -1,13 +1,63 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from "react";
 import { sendMessage, fetchMessage, subscribeToMessage } from "./ChatService";
-import { Button, Typography, OutlinedInput } from "@mui/material";
-import { Chatting, Msg } from "./Chat.styled";
+import { Chatroom, Chatting, Msg } from "./Chat.styled";
 import { getCurrentUser, getAdminUser } from "@services/auth";
 import { useChatStore } from "@store/store";
+import { Button, Typography, OutlinedInput } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
+const ChatList = () => {
+  const { open, setAdmin, setOpen, setChatAdminUser } = useChatStore();
+  const [chatList, setChatList] = useState([]);
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      const { user } = await getCurrentUser();
+      const userId = user.id;
+      setUser(userId);
+
+      const fetchedMessages = await fetchMessage(`%${userId}`);
+      const roomIds = fetchedMessages.map(
+        (messages: { room_id: string }) => messages.room_id,
+      );
+      const uniqueRoomIds = [...new Set(roomIds)];
+      const roomNames = uniqueRoomIds.map((roomId) => roomId.split("-")[0]);
+
+      setChatList(roomNames);
+
+      const { adminUser } = await getAdminUser();
+      const isAdmin = adminUser.some((admin) => admin.id === user.id);
+      setAdmin(isAdmin);
+    };
+
+    loadMessages();
+  }, []);
+
+  const handleChatting = (room, user) => {
+    setChatAdminUser(`${room}-${user}`);
+    setOpen(true);
+  };
+
+  return (
+    <Chatroom>
+      {chatList.map((room, index) => (
+        <li
+          key={`${room}_${index}`}
+          onClick={() => {
+            handleChatting(room, user);
+          }}
+        >
+          {room}
+        </li>
+      ))}
+    </Chatroom>
+  );
+};
 
 export const Chat = () => {
-  const { chatAdmin } = useChatStore();
+  const { admin, open, setOpen, chatAdmin } = useChatStore();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -40,13 +90,7 @@ export const Chat = () => {
     if (message.trim() !== "" && currentUser) {
       const senderName =
         currentUser?.user_metadata?.name || currentAdmin?.[0]?.center;
-      await sendMessage(
-        currentUser.id,
-        senderName,
-        "메세지 받는사람",
-        message,
-        chatAdmin,
-      );
+      await sendMessage(currentUser.id, senderName, message, chatAdmin);
       setMessage("");
     }
   };
@@ -91,39 +135,54 @@ export const Chat = () => {
     return formattedDate;
   };
 
-  console.log("admin: ", chatAdmin);
-
   return (
     <Chatting>
-      <Typography className="title">실시간 채팅</Typography>
-      <div className="msgContainer" ref={messageContainerRef}>
-        {messages.map((item, index) => (
-          <Msg
-            key={index}
-            className={item.sender_id === currentUser?.id ? "receiveUser" : ""}
-          >
-            <p className="message">
-              {item.sender_name}: {item.content}
-            </p>
-            <p className="time">{handleDate(item.created_at)}</p>
-          </Msg>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-      <OutlinedInput
-        className="chat"
-        maxRows={4}
-        value={message}
-        autoFocus
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="메시지를 입력하세요"
-        onKeyDown={handleKeyDown}
-        endAdornment={
-          <Button type="submit" onClick={handleSendMessage}>
-            Enter
-          </Button>
-        }
-      />
+      {open ? (
+        <>
+          <ArrowBackIosNewIcon
+            className="back"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(false);
+            }}
+          />
+          <Typography className="title">
+            {admin ? "사용자" : chatAdmin.split("-")[0]}
+          </Typography>
+          <div className="msgContainer" ref={messageContainerRef}>
+            {messages.map((item, index) => (
+              <Msg
+                key={index}
+                className={
+                  item.sender_id === currentUser?.id ? "receiveUser" : ""
+                }
+              >
+                <p className="message">
+                  {item.sender_name}: {item.content}
+                </p>
+                <p className="time">{handleDate(item.created_at)}</p>
+              </Msg>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          <OutlinedInput
+            className="chat"
+            maxRows={4}
+            value={message}
+            autoFocus
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="메시지를 입력하세요"
+            onKeyDown={handleKeyDown}
+            endAdornment={
+              <Button type="submit" onClick={handleSendMessage}>
+                Enter
+              </Button>
+            }
+          />
+        </>
+      ) : (
+        <ChatList />
+      )}
     </Chatting>
   );
 };

@@ -1,11 +1,13 @@
-import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { useUserStore } from "@store/store";
+import { useEffect, useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
+import { useUserStore, useChatStore } from "@store/store";
 import { logout } from "@services/auth";
 import { getCurrentUser } from "@services/auth";
-import { Avatar } from "@mui/material";
+import { Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
+import LogoutIcon from "@mui/icons-material/Logout";
+import TelegramIcon from "@mui/icons-material/Telegram";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import { HeaderContainer } from "./Header.styled";
@@ -33,13 +35,31 @@ const HeaderList = () => {
   const { userLogin, profile, username, setUserData, setRecentSns } =
     useUserStore();
 
+  const { setOpen } = useChatStore();
+
+  const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleNavigate = () => {
+    setOpen(false);
+    navigate("/chat");
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const { user } = await getCurrentUser();
         const { adminUser } = await getAdminUser(user.id);
-
-        console.log("User: ", user);
 
         if (user) {
           setUserData(
@@ -100,11 +120,37 @@ const HeaderList = () => {
       <li className="login">
         {userLogin ? (
           <>
-            <Avatar src={profile ?? undefined} alt="사용자 프로필사진" />
-            <p>{username} 님</p>
-            <p onClick={handleLogout} className="logout">
-              로그아웃
-            </p>
+            <div className="profile" onClick={handleClick}>
+              <Avatar src={profile ?? undefined} alt="사용자 프로필사진" />
+              <p>{username} 님</p>
+            </div>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              <MenuItem onClick={handleClose}>{username} 님 환영해요!</MenuItem>
+              <MenuItem onClick={handleNavigate}>
+                <ListItemIcon>
+                  <TelegramIcon fontSize="small" />
+                </ListItemIcon>
+                채팅 관리
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                로그아웃
+              </MenuItem>
+            </Menu>
           </>
         ) : (
           <NavLink

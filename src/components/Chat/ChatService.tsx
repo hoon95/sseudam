@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { supabase } from "@utils/supabaseClient";
 
 export const sendMessage = async (
   senderId: string,
   senderName: string,
-  receiverId: string,
   content: string,
   roomId: string,
 ) => {
@@ -11,7 +11,6 @@ export const sendMessage = async (
     {
       sender_id: senderId,
       sender_name: senderName,
-      receiver_id: receiverId,
       content,
       room_id: roomId,
     },
@@ -26,7 +25,7 @@ export const fetchMessage = async (roomId: string) => {
   const { data, error } = await supabase
     .from("messages")
     .select("*")
-    .eq("room_id", roomId)
+    .like("room_id", roomId)
     .order("created_at", { ascending: true });
 
   if (error) {
@@ -50,7 +49,7 @@ export const subscribeToMessage = (
         table: "messages",
         filter: `room_id=eq.${roomId}`,
       },
-      (payload) => {
+      (payload: { new: any }) => {
         console.log("new message in room", roomId);
         callback(payload.new);
       },

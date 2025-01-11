@@ -41,8 +41,14 @@ export const HeaderContainer = styled.header`
         gap: calc(var(--gap) * 0.5);
         padding: 0 var(--gap) 0 calc(var(--gap) * 5);
 
-        & .logout {
+        & .profile {
+          display: flex;
+          align-items: center;
+          gap: calc(var(--gap) * 0.5);
           cursor: pointer;
+        }
+
+        & .logout {
           padding-left: var(--gap);
 
           &:hover {
