@@ -1,4 +1,4 @@
-import { Share } from "@components/Share/share";
+import { Share } from "@components/Share/Share";
 
 export const SharePage = () => {
   return (
