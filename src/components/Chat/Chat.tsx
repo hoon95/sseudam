@@ -8,9 +8,9 @@ import { Button, Typography, OutlinedInput } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const ChatList = () => {
-  const { open, setAdmin, setOpen, setChatAdminUser } = useChatStore();
-  const [chatList, setChatList] = useState([]);
-  const [user, setUser] = useState([]);
+  const { setAdmin, setOpen, setChatAdminUser } = useChatStore();
+  const [chatList, setChatList] = useState<string[]>([]);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -22,20 +22,24 @@ const ChatList = () => {
       const roomIds = fetchedMessages.map(
         (messages: { room_id: string }) => messages.room_id,
       );
-      const uniqueRoomIds = [...new Set(roomIds)];
-      const roomNames = uniqueRoomIds.map((roomId) => roomId.split("-")[0]);
+      const uniqueRoomIds = [...new Set(roomIds)] as string[];
+      const roomNames = uniqueRoomIds.map(
+        (roomId: string) => roomId.split("-")[0],
+      );
 
       setChatList(roomNames);
 
       const { adminUser } = await getAdminUser();
-      const isAdmin = adminUser.some((admin) => admin.id === user.id);
+      const isAdmin = adminUser.some(
+        (admin: { id: any }) => admin.id === user.id,
+      );
       setAdmin(isAdmin);
     };
 
     loadMessages();
-  }, []);
+  }, [setAdmin]);
 
-  const handleChatting = (room, user) => {
+  const handleChatting = (room: string, user: string) => {
     setChatAdminUser(`${room}-${user}`);
     setOpen(true);
   };

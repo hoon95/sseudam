@@ -31,14 +31,14 @@ export const Filter = () => {
   const [tempWeight, setTempWeight] = useState<number[]>(weight);
 
   const handleAgeChange = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     newAge: number | number[],
   ) => {
     setTempAge(newAge as number[]);
   };
 
   const handleWeightChange = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     newWeight: number | number[],
   ) => {
     setTempWeight(newWeight as number[]);

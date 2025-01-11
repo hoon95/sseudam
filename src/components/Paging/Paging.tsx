@@ -17,7 +17,7 @@ export const Paging = ({
       showLastButton
       count={totalPages}
       page={currentPage}
-      onChange={(event, value) => onChangePage(value)}
+      onChange={(_event, value) => onChangePage(value)}
       sx={{
         width: "20vw",
         margin: "auto",
