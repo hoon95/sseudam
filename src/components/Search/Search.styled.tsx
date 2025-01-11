@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
+import banner from "@assets/images/home/banner.png";
 
 export const Banner = styled.div`
   position: relative;
   width: 100vw;
   height: 30vh;
   margin: calc(var(--gap) * -0.3) 0 calc(var(--gap) * 3) 0;
-  background: url("/src/assets/images/home/test.png") center / cover no-repeat;
+  background: url(${banner}) center / cover no-repeat;
 
   p {
     position: absolute;

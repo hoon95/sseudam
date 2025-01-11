@@ -49,18 +49,6 @@ export const Search = () => {
       ),
   });
 
-  console.log(status);
-
-  // if (isLoading) {
-  //   return (
-  //     <Box sx={{ display: "flex" }}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
-  // if (error) return <p>Error...</p>;
-  // if (!data) return <p>No data available</p>;
-
   // Pagination
   const itemsPerPage = 20;
   let totalPages = 0;

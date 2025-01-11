@@ -8,7 +8,7 @@ import {
   Personality,
 } from "./Inner.styled";
 import { KakaoIcon } from "@components/Login/Login.styled";
-import testImg from "@assets/images/home/test.png";
+import banner from "@assets/images/home/banner.png";
 import { Box, Typography, Button, Avatar, LinearProgress } from "@mui/material";
 
 export const Inner = () => {
@@ -35,7 +35,7 @@ export const Inner = () => {
         <Typography id="modal-modal-title" variant="h6" component="h2">
           나만의 반려동물 취향을 확인하고 주변에 공유해보세요!
         </Typography>
-        <img src={testImg} alt="취향 테스트 이미지" />
+        <img src={banner} alt="취향 테스트 이미지" />
         <Button
           sx={{ color: "var(--light)" }}
           variant="contained"

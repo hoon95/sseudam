@@ -1,6 +1,7 @@
 import Typewriter from "typewriter-effect";
 import { ButtonModal } from "@components/Modal/Modal";
 import { Container } from "./Test.styled";
+import capture from "@assets/images/test/capture.png";
 
 export const Test = () => {
   return (
@@ -24,10 +25,7 @@ export const Test = () => {
             나만의 반려동물 취향을 확인하고 주변에 공유해보세요!
           </p>
         </div>
-        <img
-          src="/src/assets/images/test/capture.png"
-          alt="취향 테스트 이미지"
-        />
+        <img src={capture} alt="취향 테스트 이미지" />
       </div>
 
       <ButtonModal />
