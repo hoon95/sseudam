@@ -1,4 +1,4 @@
-import { Youtube } from "@components/Share/share";
+import { Youtube } from "@components/Share/Share";
 import { Container } from "./Daily.styled";
 
 interface DailyProps {
