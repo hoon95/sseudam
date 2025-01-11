@@ -9,7 +9,6 @@ export const List = styled.div`
 
   & .card {
     width: calc(25% - var(--gap));
-    height: 15%;
     display: flex;
     flex-direction: column;
     align-items: center;

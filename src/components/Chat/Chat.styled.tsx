@@ -28,6 +28,18 @@ export const Chatting = styled.div`
     }
   }
 
+  & .noChat {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      font-size: var(--text-lg);
+    }
+  }
+
   & .chat {
     position: absolute;
     left: 0;

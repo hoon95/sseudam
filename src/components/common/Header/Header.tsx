@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import { HeaderContainer } from "./Header.styled";
+import { getAdminUser } from "@services/auth";
 
 interface Props {
   window?: () => Window;
@@ -36,9 +37,13 @@ const HeaderList = () => {
     const fetchUser = async () => {
       try {
         const { user } = await getCurrentUser();
+        const { adminUser } = await getAdminUser(user.id);
+
+        console.log("User: ", user);
 
         if (user) {
           setUserData(
+            user.id,
             true,
             user.user_metadata?.avatar_url,
             user.user_metadata?.full_name,
@@ -46,7 +51,7 @@ const HeaderList = () => {
           setRecentSns(user.app_metadata?.provider);
 
           if (user.app_metadata.provider === "email") {
-            setUserData(true, null, "관리자");
+            setUserData(user.id, true, null, adminUser[0].center);
           }
         }
       } catch (err) {

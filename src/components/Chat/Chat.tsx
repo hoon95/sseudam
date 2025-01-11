@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from "react";
 import { sendMessage, fetchMessage, subscribeToMessage } from "./ChatService";
 import { Button, Typography, OutlinedInput } from "@mui/material";
 import { Chatting, Msg } from "./Chat.styled";
 import { getCurrentUser, getAdminUser } from "@services/auth";
+import { useChatStore } from "@store/store";
 
 export const Chat = () => {
+  const { chatAdmin } = useChatStore();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
-  const [currentUser, setCurrentUser] = useState("");
-  const [currentAdmin, setCurrentAdmin] = useState("");
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentAdmin, setCurrentAdmin] = useState<any>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
@@ -34,14 +37,15 @@ export const Chat = () => {
   }, [currentUser]);
 
   const handleSendMessage = async () => {
-    if (message.trim() !== "") {
-      const user = await getCurrentUser();
-
+    if (message.trim() !== "" && currentUser) {
+      const senderName =
+        currentUser?.user_metadata?.name || currentAdmin?.[0]?.center;
       await sendMessage(
-        user.user.id,
-        user.user.user_metadata.name || currentAdmin[0].center,
+        currentUser.id,
+        senderName,
         "메세지 받는사람",
         message,
+        chatAdmin,
       );
       setMessage("");
     }
@@ -56,20 +60,18 @@ export const Chat = () => {
 
   useEffect(() => {
     const loadMessages = async () => {
-      const fetchedMessages = await fetchMessage();
+      const fetchedMessages = await fetchMessage(chatAdmin);
       setMessages(fetchedMessages);
     };
 
     loadMessages();
 
-    const unsubscribe = subscribeToMessage((newMessage) => {
-      setMessages((prevMessages) => {
-        return [...prevMessages, newMessage];
-      });
+    const unsubscribe = subscribeToMessage(chatAdmin, (newMessage) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [chatAdmin]);
 
   useEffect(() => {
     if (messageContainerRef.current) {
@@ -89,14 +91,12 @@ export const Chat = () => {
     return formattedDate;
   };
 
+  console.log("admin: ", chatAdmin);
+
   return (
     <Chatting>
       <Typography className="title">실시간 채팅</Typography>
       <div className="msgContainer" ref={messageContainerRef}>
-        {/* <p className="enter">
-          {currentAdmin[0].center}
-          님이 입장하였습니다
-        </p> */}
         {messages.map((item, index) => (
           <Msg
             key={index}

@@ -2,11 +2,13 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface UserState {
+  userid: string;
   userLogin: boolean;
   profile: string | null;
   username: string | null;
   recentSns: string | null;
   setUserData: (
+    userid: string,
     userLogin: boolean,
     profile: string | null,
     username: string | null,
@@ -76,12 +78,14 @@ interface ShortsState {
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
+      userid: "",
       userLogin: false,
       profile: null,
       username: null,
       recentSns: null,
-      setUserData: (userLogin, profile, username) =>
+      setUserData: (userid, userLogin, profile, username) =>
         set(() => ({
+          userid,
           userLogin,
           profile,
           username,
@@ -298,3 +302,15 @@ export const useShortsStore = create<ShortsState>((set) => ({
   openVideoId: null,
   setOpenVideoId: (videoId) => set({ openVideoId: videoId }),
 }));
+
+export const useChatStore = create(
+  persist(
+    (set) => ({
+      chatAdmin: "",
+      setChatAdminUser: (admin: string) => set({ chatAdmin: admin }),
+    }),
+    {
+      name: "chat-store",
+    },
+  ),
+);

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchDetail } from "@apis/supabase";
 import { NaverMapLoader, getCoordinates } from "@apis/map";
+import { useUserStore, useChatStore } from "@store/store";
 
 import { Button, Divider, Tooltip } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
@@ -19,7 +20,10 @@ import {
 } from "./PetDetail.styled";
 
 export const PetDetail = () => {
+  const { userid, recentSns } = useUserStore();
+  const { setChatAdminUser } = useChatStore();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["detail", id],
@@ -28,8 +32,12 @@ export const PetDetail = () => {
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
-  console.log(data);
   const item = data[0];
+
+  const handleChatAdmin = (admin: string) => {
+    setChatAdminUser(admin);
+    navigate("/chat");
+  };
 
   const NoticeDetail = () => {
     return (
@@ -61,7 +69,6 @@ export const PetDetail = () => {
       fetchLocation();
     }, []);
 
-    // 지도 및 마커 생성
     useEffect(() => {
       if (
         isScriptLoaded &&
@@ -88,6 +95,9 @@ export const PetDetail = () => {
       </>
     );
   };
+
+  console.log("sns", recentSns);
+  console.log("item", item);
 
   return (
     <Detail>
@@ -117,9 +127,16 @@ export const PetDetail = () => {
           </Tooltip>
         </div>
         <BtnContainer>
-          <Button variant="contained" color="success">
-            문의하기
-          </Button>
+          {recentSns !== "email" && (
+            <Button
+              onClick={() => handleChatAdmin(`${item.care_nm}-${userid}`)}
+              variant="contained"
+              color="success"
+            >
+              문의하기
+            </Button>
+          )}
+
           <Button
             variant="contained"
             color="primary"

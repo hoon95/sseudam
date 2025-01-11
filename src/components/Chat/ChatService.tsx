@@ -5,6 +5,7 @@ export const sendMessage = async (
   senderName: string,
   receiverId: string,
   content: string,
+  roomId: string,
 ) => {
   const { error } = await supabase.from("messages").insert([
     {
@@ -12,6 +13,7 @@ export const sendMessage = async (
       sender_name: senderName,
       receiver_id: receiverId,
       content,
+      room_id: roomId,
     },
   ]);
 
@@ -20,10 +22,11 @@ export const sendMessage = async (
   }
 };
 
-export const fetchMessage = async () => {
+export const fetchMessage = async (roomId: string) => {
   const { data, error } = await supabase
     .from("messages")
     .select("*")
+    .eq("room_id", roomId)
     .order("created_at", { ascending: true });
 
   if (error) {
@@ -33,14 +36,22 @@ export const fetchMessage = async () => {
   return data || [];
 };
 
-export const subscribeToMessage = (callback: (message: any) => void) => {
+export const subscribeToMessage = (
+  roomId: string,
+  callback: (message: any) => void,
+) => {
   const channel = supabase
-    .channel("chat")
+    .channel(`chat:${roomId}`)
     .on(
       "postgres_changes",
-      { event: "INSERT", schema: "public", table: "messages" },
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "messages",
+        filter: `room_id=eq.${roomId}`,
+      },
       (payload) => {
-        console.log("new message");
+        console.log("new message in room", roomId);
         callback(payload.new);
       },
     )
