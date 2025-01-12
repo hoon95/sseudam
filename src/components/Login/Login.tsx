@@ -3,11 +3,8 @@ import { loginWithSns } from "@services/auth";
 import { LoginContainer, KakaoIcon } from "./Login.styled";
 import { Sns } from "./Login.styled";
 import { Link } from "react-router-dom";
-
-// Icon Load
-import InstagramIcon from "@mui/icons-material/Instagram";
-import GoogleIcon from "@mui/icons-material/Google";
 import { Tooltip } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const SnsLogin = async (sns: string) => {
   try {
@@ -44,18 +41,6 @@ export const Login = () => {
           <div>
             <KakaoIcon />
             카카오로 시작하기
-          </div>
-        </Tooltip>
-        <Tooltip
-          className="instagram"
-          title={recentSns === "instagram" ? "최근 접속한 계정" : null}
-          open={true}
-          arrow={true}
-          placement="right"
-        >
-          <div>
-            <InstagramIcon />
-            인스타로 시작하기
           </div>
         </Tooltip>
         <Tooltip

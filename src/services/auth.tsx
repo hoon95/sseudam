@@ -15,6 +15,9 @@ export const loginWithSns = async (sns: string) => {
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider: sns,
+      options: {
+        redirectTo: `https://dlwqrjdqoenwacpxpjiy.supabase.co/auth/v1/callback`,
+      },
     });
 
     if (error) {

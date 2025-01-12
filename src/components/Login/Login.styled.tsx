@@ -8,7 +8,7 @@ export const Sns = styled.section`
   padding-top: calc(var(--gap) * 5);
 
   & .kakao,
-  .instagram,
+  /* .instagram, */
   .google {
     display: flex;
     justify-content: center;
@@ -16,21 +16,46 @@ export const Sns = styled.section`
     gap: calc(var(--gap) * 0.5);
     padding: var(--gap);
     font-family: "Moneygraphy-Rounded";
-    background: var(--light);
     font-size: var(--font-md);
     border: 1px solid transparent;
+    border-radius: 10px;
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.1),
+      0 1px 3px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
     cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.15),
+        0 3px 6px rgba(0, 0, 0, 0.1);
+    }
 
     &.kakao {
       background: var(--yellow);
     }
-    &.instagram {
-      color: var(--light);
-      background: linear-gradient(to right, #eb8e26, #680edd);
-      border: none;
-    }
     &.google {
-      border: 1px solid var(--gray);
+      color: var(--dark);
+      /* background: linear-gradient(
+        90deg,
+        #2d282c 0%,
+        #543639 20%,
+        #793d49 40%,
+        #634247 60%,
+        #49363a 80%,
+        #2d282c 100%
+      ); */
+      /* border: 1.5px solid #564e50; */
+      background: linear-gradient(
+        225deg,
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0.04) 50%,
+        rgba(0, 0, 0, 0.02) 100%
+      );
+      border: none;
     }
   }
 `;
