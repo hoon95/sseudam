@@ -1,4 +1,4 @@
-import { supabase } from "@utils/supabaseClient";
+import { supabase, supabaseAdmin } from "@utils/supabaseClient";
 import Swal from "sweetalert2";
 
 export const loginWithSns = async (sns: string) => {
@@ -41,6 +41,15 @@ export const logout = async () => {
 export const getCurrentUser = async () => {
   const { data: user } = await supabase.auth.getUser();
   return user;
+};
+
+export const getAllUser = async () => {
+  const { data, error } = await supabaseAdmin.auth.admin.listUsers();
+  if (error) {
+    throw error;
+  }
+
+  return data;
 };
 
 export const getAdminUser = async (id?: string, center?: string) => {

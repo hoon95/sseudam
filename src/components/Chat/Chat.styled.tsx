@@ -1,15 +1,37 @@
 import styled from "@emotion/styled";
 
-export const Chatroom = styled.ul`
+export const ChatSelect = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: calc(var(--gap) * 10) 0;
+`;
+
+export const Chatroom = styled.div`
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);
   cursor: pointer;
 
-  li {
+  & .title {
+    display: flex;
+    justify-content: center;
     font-size: var(--text-md);
-    border-bottom: 1px solid var(--dark);
-    padding: var(--gap);
+  }
+
+  & .room {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap);
+    flex-wrap: wrap;
+
+    & .list {
+      width: calc(25% + var(--gap));
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+      padding: var(--gap);
+    }
   }
 `;
 
@@ -22,6 +44,13 @@ export const Chatting = styled.div`
   margin: calc(var(--gap) * 5) auto;
   padding: calc(var(--gap) * 3) var(--gap);
   background: #abc0d0;
+
+  & .messageLoading {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   & .back {
     cursor: pointer;

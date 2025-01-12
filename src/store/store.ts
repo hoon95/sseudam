@@ -306,6 +306,8 @@ export const useShortsStore = create<ShortsState>((set) => ({
 export const useChatStore = create(
   persist(
     (set) => ({
+      entireUser: [],
+      setEntireUser: (user: string[]) => set({ entireUser: user }),
       admin: true,
       setAdmin: (status: boolean) => set({ admin: status }),
       open: false,
