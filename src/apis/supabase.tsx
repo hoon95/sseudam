@@ -7,12 +7,12 @@ interface RegionType {
 export const fetchLocation = async (
   select: string,
   table: string,
-  region: string,
+  region?: string,
 ) => {
   try {
     let query = supabase.from(table).select(select);
 
-    if (region) {
+    if (region && region !== "전체") {
       query = query.eq("region", region);
     }
 
@@ -74,10 +74,10 @@ export const fetchData = async (
         .lte("calculated_weight", maxWeight);
     }
 
-    if (region) {
+    if (region && region !== "전체") {
       query = query.like("org_nm", `${region}%`);
     }
-    if (city) {
+    if (city && city !== "전체") {
       query = query.like("org_nm", `%${city}`);
     }
 

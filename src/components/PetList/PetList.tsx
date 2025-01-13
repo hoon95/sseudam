@@ -33,7 +33,14 @@ export const PetList = ({ data }: PetListProps) => {
                   </p>
                   <p>품종: {item.kind_cd}</p>
                   <p>나이: {item.calculated_age}세</p>
-                  <p>성별: {item.sex_cd}</p>
+                  <p>
+                    성별:{" "}
+                    {item.sex_cd === "M"
+                      ? "수컷"
+                      : item.sex_cd === "F"
+                        ? "암컷"
+                        : "알 수 없음"}
+                  </p>
                   <p>체중: {item.calculated_weight}kg</p>
                   <p>지역: {item.org_nm}</p>
                 </Typography>

@@ -265,9 +265,9 @@ export const useLocationStore = create<locationState>((set) => ({
   setRegion: (regionList) => set({ region: regionList }),
   city: [],
   setCity: (cityList) => set({ city: cityList }),
-  selectedRegion: "",
+  selectedRegion: "전체",
   setSelectedRegion: (selectedRegion) => set({ selectedRegion }),
-  selectedCity: "",
+  selectedCity: "전체",
   setSelectedCity: (selectedCity) => set({ selectedCity }),
 }));
 

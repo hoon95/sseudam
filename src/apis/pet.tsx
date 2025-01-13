@@ -80,7 +80,8 @@ export const fetchPetData = async () => {
       {
         params: {
           serviceKey,
-          numOfRows: 100,
+          numOfRows: 5,
+          pageNo: 1,
           _type: "json",
         },
       },
@@ -88,15 +89,24 @@ export const fetchPetData = async () => {
 
     const pets: PetType[] = data.response.body.items.item;
 
-    // Supabase DB에 저장
     const savePetsToDB = async () => {
       const currentYear = new Date().getFullYear();
 
+      const { error: deleteError } = await supabase.rpc("truncate_list");
+
+      if (deleteError) {
+        console.error("기존 데이터 삭제 오류:", deleteError.message);
+        return;
+      }
+
       for (const pet of pets) {
         const kindCd = pet.kindCd;
-        const type = kindCd.includes("개") ? "강아지" : "고양이";
+        const type = kindCd.includes("개")
+          ? "강아지"
+          : kindCd.includes("고양이")
+            ? "고양이"
+            : "기타";
         const kind = kindCd.replace(/\[.*?\]\s*/, "").trim();
-
         const ageMatch = pet.age.match(/^(\d{4})/);
         const ageYear = ageMatch ? parseInt(ageMatch[1], 10) : null;
         const calculatedAge = ageYear ? currentYear - ageYear : null;
@@ -105,7 +115,7 @@ export const fetchPetData = async () => {
           ? parseFloat(weightMatch[1])
           : null;
 
-        const { data: insertData, error } = await supabase.from("list").insert([
+        const { error } = await supabase.from("list").insert([
           {
             desertion_no: pet.desertionNo,
             filename: pet.filename,
@@ -139,8 +149,6 @@ export const fetchPetData = async () => {
 
         if (error) {
           console.error("Supabase 데이터 삽입 오류:", error.message);
-        } else {
-          console.log("Pet data inserted:", insertData);
         }
       }
     };

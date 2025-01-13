@@ -73,8 +73,14 @@ export const Filter = () => {
 
   const handleRegion = async (event: SelectChangeEvent<string>) => {
     const eventRegion = event.target.value;
-    const cityData = await fetchLocation("*", "location", eventRegion);
-    setCity(cityData);
+    const cityData = await fetchLocation(
+      "*",
+      "location",
+      eventRegion !== "전체" ? eventRegion : "",
+    );
+
+    setCity(eventRegion !== "전체" ? cityData : []);
+    setSelectedCity("전체");
     setSelectedRegion(eventRegion);
   };
 
@@ -101,7 +107,7 @@ export const Filter = () => {
           value={selectedRegion}
           onChange={handleRegion}
         >
-          <MenuItem value="">
+          <MenuItem value="전체">
             <em>전체</em>
           </MenuItem>
           {region.map((item: LocationType) => (
@@ -120,7 +126,7 @@ export const Filter = () => {
           value={selectedCity}
           onChange={handleCity}
         >
-          <MenuItem value="">
+          <MenuItem value="전체">
             <em>전체</em>
           </MenuItem>
           {region &&
@@ -149,7 +155,6 @@ export const Filter = () => {
           <FormControlLabel value="all" control={<Radio />} label="전체" />
           <FormControlLabel value="male" control={<Radio />} label="수컷" />
           <FormControlLabel value="female" control={<Radio />} label="암컷" />
-          <FormControlLabel value="none" control={<Radio />} label="모름" />
         </RadioGroup>
       </FormControl>
       <FormControl>

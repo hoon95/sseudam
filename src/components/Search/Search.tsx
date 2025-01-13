@@ -12,7 +12,6 @@ import { Paging } from "@components/Paging/Paging";
 import { useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import { List } from "../PetList/PetList.styled";
-// import { fetchAPI } from "@apis/pet";
 // import { fetchPetData } from "@apis/pet";
 
 export const Search = () => {
@@ -21,8 +20,7 @@ export const Search = () => {
   const { selectedRegion, selectedCity } = useLocationStore();
 
   useEffect(() => {
-    // fetchAPI();
-    // fetchPetType();
+    // fetchPetData();
   }, []);
 
   // List 조회
