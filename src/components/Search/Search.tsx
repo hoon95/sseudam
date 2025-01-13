@@ -9,19 +9,13 @@ import { Banner, Container, PagingLeft } from "./Search.styled";
 import { Filter } from "@components/Filter/Filter";
 import { PetList } from "@components/PetList/PetList";
 import { Paging } from "@components/Paging/Paging";
-import { useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import { List } from "../PetList/PetList.styled";
-// import { fetchPetData } from "@apis/pet";
 
 export const Search = () => {
   const { page, setPage } = usePaginationStore();
   const { type, setType, gender, age, weight } = useFilterStore();
   const { selectedRegion, selectedCity } = useLocationStore();
-
-  useEffect(() => {
-    // fetchPetData();
-  }, []);
 
   // List 조회
   const { status, data, error } = useQuery({

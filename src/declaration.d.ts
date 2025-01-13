@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "@styles*";
 declare module "@components/*";
 declare module "@pages/*";
@@ -7,12 +8,19 @@ declare module "@services/*";
 declare module "@utils/*";
 
 declare module "aos";
+declare module "node-cron";
 
 interface Window {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   kakao: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Kakao: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   naver: any;
+}
+
+// env.d.ts
+interface ImportMetaEnv {
+  VITE_API_URL: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
 }

@@ -5,7 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ESNext",
     "baseUrl": "src",
     "paths": {
@@ -19,6 +19,7 @@
       "@utils/*": ["utils/*"]
     },
     "types": ["kakao.maps.d.ts"],
+    "preserveValueImports": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true

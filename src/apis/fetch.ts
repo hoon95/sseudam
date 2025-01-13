@@ -1,9 +1,14 @@
 import { fetchPetData } from "./pet";
+import cron from "node-cron";
 
-fetchPetData()
-  .then(() => {
-    console.log("펫 데이터 가져오기 완료");
-  })
-  .catch((error) => {
-    console.error("펫 데이터 가져오기 실패:", error);
-  });
+cron.schedule(
+  "* * * * *",
+  async () => {
+    try {
+      await fetchPetData();
+    } catch (error) {
+      console.error("Error fetching pet data:", error);
+    }
+  },
+  { scheduled: true, timezone: "Asia/Seoul" },
+);
