@@ -71,8 +71,8 @@ dotenv.config();
 // };
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseKey = process.env.VITE_SERVICE_ROLE as string;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const fetchPetData = async () => {
   const serviceKey = process.env.VITE_API_SERVICE_KEY;
@@ -102,7 +102,7 @@ export const fetchPetData = async () => {
       const { error: deleteError } = await supabase.rpc("truncate_list");
 
       if (deleteError) {
-        console.error("기존 데이터 삭제 오류:", deleteError.message);
+        console.error("기존 데이터 삭제 오류:", deleteError);
         return;
       }
 
