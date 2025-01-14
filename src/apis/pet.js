@@ -94,8 +94,7 @@ var fetchPetData = function () { return __awaiter(void 0, void 0, void 0, functi
                 return [4 /*yield*/, axios_1.default.get("http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic", {
                         params: {
                             serviceKey: serviceKey,
-                            numOfRows: 100,
-                            pageNo: 1,
+                            numOfRows: 1000,
                             _type: "json",
                         },
                     })];

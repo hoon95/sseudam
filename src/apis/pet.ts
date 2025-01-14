@@ -87,8 +87,7 @@ export const fetchPetData = async () => {
       {
         params: {
           serviceKey,
-          numOfRows: 100,
-          pageNo: 1,
+          numOfRows: 1000,
           _type: "json",
         },
       },
