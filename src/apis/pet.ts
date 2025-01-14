@@ -101,7 +101,7 @@ export const fetchPetData = async () => {
       const { error: deleteError } = await supabase.rpc("truncate_list");
 
       if (deleteError) {
-        console.error("기존 데이터 삭제 오류:", deleteError.message);
+        console.error("기존 데이터 삭제 오류:", deleteError);
         return;
       }
 
