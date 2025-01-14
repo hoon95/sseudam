@@ -1,5 +1,6 @@
 import axios from "axios";
-import { supabase } from "@utils/supabaseClient";
+import * as dotenv from "dotenv";
+import { createClient } from "@supabase/supabase-js";
 
 interface PetType {
   itemId: number;
@@ -27,6 +28,8 @@ interface PetType {
   officetel: string;
   noticeComment: string;
 }
+
+dotenv.config();
 
 // export const fetchAPI = async () => {
 //   const serviceKey = import.meta.env.VITE_API_SERVICE_KEY;
@@ -67,8 +70,12 @@ interface PetType {
 //   }
 // };
 
+const supabaseUrl = process.env.VITE_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY as string;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 export const fetchPetData = async () => {
-  const serviceKey = import.meta.env.VITE_API_SERVICE_KEY;
+  const serviceKey = process.env.VITE_API_SERVICE_KEY;
 
   if (!serviceKey) {
     throw new Error("서비스 키가 설정되지 않았습니다. 환경 변수를 확인하세요.");
@@ -80,7 +87,7 @@ export const fetchPetData = async () => {
       {
         params: {
           serviceKey,
-          numOfRows: 5,
+          numOfRows: 100,
           pageNo: 1,
           _type: "json",
         },
@@ -104,8 +111,8 @@ export const fetchPetData = async () => {
         const type = kindCd.includes("개")
           ? "강아지"
           : kindCd.includes("고양이")
-            ? "고양이"
-            : "기타";
+          ? "고양이"
+          : "기타";
         const kind = kindCd.replace(/\[.*?\]\s*/, "").trim();
         const ageMatch = pet.age.match(/^(\d{4})/);
         const ageYear = ageMatch ? parseInt(ageMatch[1], 10) : null;

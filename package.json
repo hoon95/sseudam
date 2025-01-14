@@ -7,7 +7,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "fetch-pet-data": "ts-node --loader ts-node/esm src/apis/fetch.ts"
+    "fetch-pet-data": "node ./src/apis/fetch.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -19,6 +19,7 @@
     "@vis.gl/react-google-maps": "^1.4.2",
     "aos": "^2.3.4",
     "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
     "emotion-reset": "^3.0.1",
     "kakao-js-sdk": "^1.2.3",
     "node-cron": "^3.0.3",
