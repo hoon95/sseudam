@@ -6,13 +6,14 @@ import { getCurrentUser, getAllUser, getAdminUser } from "@services/auth";
 import { useChatStore } from "@store/store";
 import {
   Paper,
+  Avatar,
   Button,
   Typography,
   OutlinedInput,
   CircularProgress,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import ChatIcon from "@assets/images/home/chat.png";
 
 const ChatList = () => {
   const {
@@ -94,7 +95,7 @@ const ChatList = () => {
 
   return (
     <Chatroom>
-      <Typography className="title">채팅방 목록</Typography>
+      <Avatar className="title" src={ChatIcon} />
       <div className="room">
         {chatList.length === 0 ? (
           <div className="loading">
@@ -111,7 +112,6 @@ const ChatList = () => {
                 handleChatting(admin ? [adminName, room] : [room, user]);
               }}
             >
-              <LockOutlinedIcon />
               {admin ? users[room] : room}
             </Paper>
           ))
@@ -122,7 +122,8 @@ const ChatList = () => {
 };
 
 export const Chat = () => {
-  const { entireUser, admin, open, setOpen, chatAdmin } = useChatStore();
+  const { entireUser, admin, isOpen, setIsOpen, open, setOpen, chatAdmin } =
+    useChatStore();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -214,64 +215,84 @@ export const Chat = () => {
   );
 
   return (
-    <>
-      {open ? (
-        <Chatting>
-          <ArrowBackIosNewIcon
-            className="back"
-            onClick={(e) => {
-              e.preventDefault();
-              setOpen(false);
-            }}
-          />
-          <Typography className="title">
-            {admin
-              ? users[chatAdmin.split("-").slice(1).join("-")]
-              : chatAdmin.split("-")[0]}
-          </Typography>
-          {messages.length === 0 ? (
-            <div className="messageLoading">
-              <CircularProgress />
-            </div>
-          ) : (
-            <div className="msgContainer" ref={messageContainerRef}>
-              {messages.map((item) => (
-                <Msg
-                  key={item.created_at}
-                  className={
-                    item.sender_id === currentUser?.id ? "receiveUser" : ""
-                  }
-                >
-                  <p className="message">
-                    {item.sender_name}: {item.content}
-                  </p>
-                  <p className="time">{handleDate(item.created_at)}</p>
-                </Msg>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-          )}
+    isOpen && (
+      <Paper
+        square={false}
+        elevation={5}
+        sx={{
+          position: "fixed",
+          width: "20%",
+          height: "50%",
+          bottom: 16,
+          right: 16,
+          borderRadius: "var(--gap)",
+          background: "var(--mustard)",
+        }}
+      >
+        <Button
+          sx={{ position: "absolute", right: 0, color: "var(--dark)" }}
+          onClick={() => setIsOpen(false)}
+        >
+          X
+        </Button>
+        {open ? (
+          <Chatting>
+            <ArrowBackIosNewIcon
+              className="back"
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(false);
+              }}
+            />
+            <Typography className="title">
+              {admin
+                ? users[chatAdmin.split("-").slice(1).join("-")]
+                : chatAdmin.split("-")[0]}
+            </Typography>
+            {messages.length === 0 ? (
+              <div className="messageLoading">
+                <CircularProgress />
+              </div>
+            ) : (
+              <div className="msgContainer" ref={messageContainerRef}>
+                {messages.map((item) => (
+                  <Msg
+                    key={item.created_at}
+                    className={
+                      item.sender_id === currentUser?.id ? "receiveUser" : ""
+                    }
+                  >
+                    <p className="message">
+                      {item.sender_name}: {item.content}
+                    </p>
+                    <p className="time">{handleDate(item.created_at)}</p>
+                  </Msg>
+                ))}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
 
-          <OutlinedInput
-            className="chat"
-            maxRows={4}
-            value={message}
-            autoFocus
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="메시지를 입력하세요"
-            onKeyDown={handleKeyDown}
-            endAdornment={
-              <Button type="submit" onClick={handleSendMessage}>
-                Enter
-              </Button>
-            }
-          />
-        </Chatting>
-      ) : (
-        <ChatSelect>
-          <ChatList />
-        </ChatSelect>
-      )}
-    </>
+            <OutlinedInput
+              className="chat"
+              maxRows={4}
+              value={message}
+              autoFocus
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="메시지를 입력하세요"
+              onKeyDown={handleKeyDown}
+              endAdornment={
+                <Button type="submit" onClick={handleSendMessage}>
+                  Enter
+                </Button>
+              }
+            />
+          </Chatting>
+        ) : (
+          <ChatSelect>
+            <ChatList />
+          </ChatSelect>
+        )}
+      </Paper>
+    )
   );
 };

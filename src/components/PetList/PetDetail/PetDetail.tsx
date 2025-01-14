@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchDetail } from "@apis/supabase";
 import { NaverMapLoader, getCoordinates } from "@apis/map";
 import { useUserStore, useChatStore } from "@store/store";
@@ -21,9 +21,8 @@ import {
 
 export const PetDetail = () => {
   const { userid, recentSns } = useUserStore();
-  const { setOpen, setChatAdminUser } = useChatStore();
+  const { setIsOpen, setOpen, setChatAdminUser } = useChatStore();
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["detail", id],
@@ -36,8 +35,8 @@ export const PetDetail = () => {
 
   const handleChatAdmin = (admin: string) => {
     setChatAdminUser(admin);
+    setIsOpen(true);
     setOpen(true);
-    navigate("/chat");
   };
 
   const NoticeDetail = () => {

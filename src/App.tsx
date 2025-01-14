@@ -5,6 +5,7 @@ import { SharePage } from "@pages/SharePage";
 import { LoginPage } from "@pages/LoginPage";
 import { ChatPage } from "@pages/ChatPage";
 import { Test } from "@components/Test/Test";
+import { Chat } from "@components/Chat/Chat";
 import { Header } from "@components/common/Header/Header";
 import { Footer } from "@components/common/Footer/Footer";
 import { AdminLogin, AdminSignUp } from "@components/Login/Admin/Admin";
@@ -31,6 +32,7 @@ export const App = () => {
           <Route path="/chat" element={<ChatPage />}></Route>
           <Route path="/test" element={<Test />}></Route>
         </Routes>
+        <Chat />
         <Footer />
       </BrowserRouter>
     </QueryClientProvider>

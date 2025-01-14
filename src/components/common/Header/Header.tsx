@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useUserStore, useChatStore } from "@store/store";
 import { logout } from "@services/auth";
 import { getCurrentUser } from "@services/auth";
@@ -35,9 +35,7 @@ const HeaderList = () => {
   const { userLogin, profile, username, setUserData, setRecentSns } =
     useUserStore();
 
-  const { setOpen } = useChatStore();
-
-  const navigate = useNavigate();
+  const { setIsOpen, setOpen } = useChatStore();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -48,7 +46,7 @@ const HeaderList = () => {
 
   const handleNavigate = () => {
     setOpen(false);
-    navigate("/chat");
+    setIsOpen(true);
   };
 
   const handleClose = () => {

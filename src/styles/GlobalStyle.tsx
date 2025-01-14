@@ -21,6 +21,7 @@ export const GlobalStyle = () => (
         --gray: #b6b1a7;
         --yellow: #ffe835;
         --red: #ff2400;
+        --mustard: #fdc441;
       }
 
       @font-face {

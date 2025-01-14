@@ -3,34 +3,35 @@ import styled from "@emotion/styled";
 export const ChatSelect = styled.div`
   display: flex;
   justify-content: center;
-  margin: calc(var(--gap) * 10) 0;
+  /* margin: calc(var(--gap) * 10) 0; */
 `;
 
 export const Chatroom = styled.div`
-  width: 50%;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
-  cursor: pointer;
+  align-items: center;
+  overflow-x: scroll;
 
   & .title {
-    display: flex;
-    justify-content: center;
-    font-size: var(--text-md);
+    width: 50px;
+    height: 50px;
+    margin: calc(var(--gap) * 1.5) 0 calc(var(--gap) * 0.5) 0;
   }
 
   & .room {
+    width: 90%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: var(--gap);
-    flex-wrap: wrap;
+    gap: calc(var(--gap) * 0.4);
+    background: var(--mustard);
 
     & .list {
-      width: calc(25% + var(--gap));
+      /* width: 100%; */
       display: flex;
       align-items: center;
-      gap: var(--gap);
-      padding: var(--gap);
+      padding: calc(var(--gap) * 0.5);
     }
   }
 `;
