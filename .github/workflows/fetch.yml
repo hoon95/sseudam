@@ -23,4 +23,6 @@ jobs:
       - name: Fetch Pet Data
         run: npm run fetch-pet-data
         env:
+          VITE_SUPABASE_URL: ${{ secrets.GH_SUPABSE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.GH_SUPABSE_ANON_KEY }}
           VITE_API_SERVICE_KEY: ${{ secrets.GH_API_SERVICE_KEY }}
