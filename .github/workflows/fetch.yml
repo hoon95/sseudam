@@ -1,8 +1,8 @@
 name: Fetch Pet Data Daily
 
 on:
-  schedule:
-    - cron: "0 10 19 * *"
+  schedule
+    - cron: "0 21 * * *"
 
 jobs:
   fetch:
