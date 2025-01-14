@@ -77,8 +77,8 @@ dotenv.config();
 //   }
 // };
 var supabaseUrl = process.env.VITE_SUPABASE_URL;
-var supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
-var supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseAnonKey);
+var supabaseKey = process.env.VITE_SERVICE_ROLE;
+var supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseKey);
 var fetchPetData = function () { return __awaiter(void 0, void 0, void 0, function () {
     var serviceKey, data, pets_1, savePetsToDB, error_1;
     return __generator(this, function (_a) {

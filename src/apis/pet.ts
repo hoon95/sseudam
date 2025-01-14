@@ -71,8 +71,8 @@ dotenv.config();
 // };
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseKey = process.env.VITE_SERVICE_ROLE as string;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const fetchPetData = async () => {
   const serviceKey = process.env.VITE_API_SERVICE_KEY;
