@@ -1,50 +1,49 @@
 import styled from "@emotion/styled";
 
 export const ChatSelect = styled.div`
+  height: 100%;
   display: flex;
   justify-content: center;
-  /* margin: calc(var(--gap) * 10) 0; */
 `;
 
 export const Chatroom = styled.div`
   width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: scroll;
 
   & .title {
     width: 50px;
     height: 50px;
-    margin: calc(var(--gap) * 1.5) 0 calc(var(--gap) * 0.5) 0;
+    margin-bottom: calc(var(--gap) * 0.3);
   }
 
   & .room {
     width: 90%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: calc(var(--gap) * 0.4);
     background: var(--mustard);
+    overflow: scroll;
 
     & .list {
-      /* width: 100%; */
       display: flex;
       align-items: center;
       padding: calc(var(--gap) * 0.5);
+      cursor: pointer;
     }
   }
 `;
 
 export const Chatting = styled.div`
+  height: 100%;
   position: relative;
-  width: 80vw;
-  height: 60vh;
   display: flex;
   flex-direction: column;
-  margin: calc(var(--gap) * 5) auto;
-  padding: calc(var(--gap) * 3) var(--gap);
-  background: #abc0d0;
+  margin-top: var(--gap);
 
   & .messageLoading {
     height: 100%;
@@ -54,15 +53,24 @@ export const Chatting = styled.div`
   }
 
   & .back {
+    margin-left: calc(var(--gap) * 0.5);
     cursor: pointer;
   }
 
-  & .title {
-    font-size: var(--gap);
-    text-align: center;
+  & .top {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    padding-bottom: var(--gap);
+
+    & .title {
+      text-align: center;
+    }
   }
 
   & .msgContainer {
+    height: 100%;
+    padding: var(--gap);
     overflow: scroll;
 
     & .enter {
@@ -88,12 +96,11 @@ export const Chatting = styled.div`
   }
 
   & .chat {
-    position: absolute;
+    position: sticky;
     left: 0;
     bottom: 0;
-    width: 100%;
-    margin: 0 auto;
     background: var(--light);
+    border-radius: var(--gap);
   }
 `;
 

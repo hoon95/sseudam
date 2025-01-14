@@ -229,26 +229,23 @@ export const Chat = () => {
           background: "var(--mustard)",
         }}
       >
-        <Button
-          sx={{ position: "absolute", right: 0, color: "var(--dark)" }}
-          onClick={() => setIsOpen(false)}
-        >
-          X
-        </Button>
+        <p onClick={() => setIsOpen(false)}>X</p>
         {open ? (
           <Chatting>
-            <ArrowBackIosNewIcon
-              className="back"
-              onClick={(e) => {
-                e.preventDefault();
-                setOpen(false);
-              }}
-            />
-            <Typography className="title">
-              {admin
-                ? users[chatAdmin.split("-").slice(1).join("-")]
-                : chatAdmin.split("-")[0]}
-            </Typography>
+            <div className="top">
+              <ArrowBackIosNewIcon
+                className="back"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpen(false);
+                }}
+              />
+              <Typography className="title">
+                {admin
+                  ? users[chatAdmin.split("-").slice(1).join("-")]
+                  : chatAdmin.split("-")[0]}
+              </Typography>
+            </div>
             {messages.length === 0 ? (
               <div className="messageLoading">
                 <CircularProgress />
