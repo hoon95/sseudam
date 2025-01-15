@@ -3,7 +3,6 @@ import { HomePage } from "@pages/HomePage";
 import { SearchPage } from "@pages/SearchPage";
 import { SharePage } from "@pages/SharePage";
 import { LoginPage } from "@pages/LoginPage";
-import { ChatPage } from "@pages/ChatPage";
 import { Test } from "@components/Test/Test";
 import { Chat } from "@components/Chat/Chat";
 import { Header } from "@components/common/Header/Header";
@@ -29,7 +28,6 @@ export const App = () => {
           <Route path="/search" element={<SearchPage />}></Route>
           <Route path="/search/detail/:id" element={<PetDetail />}></Route>
           <Route path="/share" element={<SharePage />}></Route>
-          <Route path="/chat" element={<ChatPage />}></Route>
           <Route path="/test" element={<Test />}></Route>
         </Routes>
         <Chat />
