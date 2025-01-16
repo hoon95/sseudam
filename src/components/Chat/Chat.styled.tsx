@@ -14,18 +14,15 @@ export const Chatroom = styled.div`
   align-items: center;
 
   & .title {
-    width: 50px;
-    height: 50px;
-    margin-bottom: calc(var(--gap) * 0.3);
+    /* margin-bottom: calc(var(--gap) * 0.3); */
   }
 
   & .room {
     width: 90%;
-    height: 90%;
+    height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: calc(var(--gap) * 0.4);
+    justify-content: start;
     background: var(--mustard);
     overflow: scroll;
 
@@ -33,6 +30,7 @@ export const Chatroom = styled.div`
       display: flex;
       align-items: center;
       padding: calc(var(--gap) * 0.5);
+      margin-bottom: calc(var(--gap) * 0.4);
       cursor: pointer;
     }
   }
@@ -43,7 +41,7 @@ export const Chatting = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: var(--gap);
+  margin-top: calc(var(--gap) * 0.5);
 
   & .messageLoading {
     height: 100%;
@@ -53,6 +51,7 @@ export const Chatting = styled.div`
   }
 
   & .back {
+    font-size: var(--text-sm);
     margin-left: calc(var(--gap) * 0.5);
     cursor: pointer;
   }
@@ -61,7 +60,7 @@ export const Chatting = styled.div`
     display: flex;
     align-items: center;
     gap: var(--gap);
-    padding-bottom: var(--gap);
+    padding-bottom: calc(var(--gap) * 0.5);
 
     & .title {
       text-align: center;
@@ -69,8 +68,8 @@ export const Chatting = styled.div`
   }
 
   & .msgContainer {
-    height: 100%;
-    padding: var(--gap);
+    height: 70%;
+    padding: 0 calc(var(--gap) * 0.5);
     overflow: scroll;
 
     & .enter {
@@ -119,12 +118,14 @@ export const Msg = styled.div`
   }
 
   & .message {
+    font-size: calc(var(--text-sm) * 0.7);
     background: var(--light);
     padding: calc(var(--gap) * 0.5);
     border-radius: calc(var(--gap) * 0.5);
   }
 
   & .time {
+    font-size: calc(var(--text-sm) * 0.7);
     color: #606d76;
     padding-left: calc(var(--gap) * 0.2);
   }

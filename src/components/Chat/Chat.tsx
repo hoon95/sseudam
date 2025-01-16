@@ -229,7 +229,15 @@ export const Chat = () => {
           background: "var(--mustard)",
         }}
       >
-        <p onClick={() => setIsOpen(false)}>X</p>
+        <Button
+          onClick={() => setIsOpen(false)}
+          style={{
+            justifyContent: "start",
+            marginLeft: "calc(var(--gap) * 0.5)",
+          }}
+        >
+          X
+        </Button>
         {open ? (
           <Chatting>
             <div className="top">
