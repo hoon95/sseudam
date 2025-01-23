@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
     "composite": true,
@@ -17,7 +17,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "jsx": "react-jsx"
   },
   "include": ["vite.config.ts", "src/**/*.ts", "src/**/*.tsx"],
   "references": []

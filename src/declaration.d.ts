@@ -8,7 +8,6 @@ declare module "@services/*";
 declare module "@utils/*";
 
 declare module "aos";
-declare module "node-cron";
 
 interface Window {
   kakao: any;

@@ -7,6 +7,7 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
     "baseUrl": "src",
     "paths": {
       "@styles/*": ["styles/*"],
@@ -22,10 +23,8 @@
     "preserveValueImports": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "ts-node": {
-    "esm": true
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
