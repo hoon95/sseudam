@@ -16,7 +16,7 @@ export const Preference = () => {
           <div className="cursor">
             <Typewriter
               options={{
-                strings: ["말티즈", "푸들", "포메라니안", "치와와", "시츄"],
+                strings: ["말티즈", "푸들", "치와와", "시츄"],
                 autoStart: true,
                 loop: true,
               }}
