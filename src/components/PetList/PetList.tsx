@@ -1,6 +1,7 @@
 import { Card, CardContent, Typography, Avatar } from "@mui/material";
 import { List, EmptyList } from "./PetList.styled";
 import { Link } from "react-router-dom";
+import { memo } from "react";
 import avatar from "@assets/images/search/avatar.png";
 
 interface PetType {
@@ -18,13 +19,13 @@ interface PetType {
 interface PetListProps {
   data: PetType[];
 }
-export const PetList = ({ data }: PetListProps) => {
+export const PetList = memo(({ data }: PetListProps) => {
   return (
     <List>
       {data.length > 0 ? (
         data.map((item) => (
-          <Card variant="outlined" className="card">
-            <Link key={item.desertion_no} to={`./detail/${item.desertion_no}`}>
+          <Card variant="outlined" className="card" key={item.desertion_no}>
+            <Link to={`./detail/${item.desertion_no}`}>
               <img src={item.popfile} alt="유기동물 사진" />
               <CardContent>
                 <Typography className="text">
@@ -60,4 +61,4 @@ export const PetList = ({ data }: PetListProps) => {
       )}
     </List>
   );
-};
+});
