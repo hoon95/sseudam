@@ -162,7 +162,7 @@ export const Filter = () => {
           <p className="subtitle">연령</p>
           <p className="range">{`${age[0]}세 ~ ${age[1]}세`}</p>
         </div>
-        <Box sx={{ width: 300 }}>
+        <Box sx={{ s: "100%", md: 300 }}>
           <Slider
             getAriaLabel={() => "Age range"}
             value={tempAge}
@@ -180,7 +180,7 @@ export const Filter = () => {
           <p className="subtitle">몸무게</p>
           <p className="range">{`${weight[0]}kg ~ ${weight[1]}kg`}</p>
         </div>
-        <Box sx={{ width: 300 }}>
+        <Box sx={{ xs: "100%", md: 300 }}>
           <Slider
             getAriaLabel={() => "Weight range"}
             value={tempWeight}
