@@ -60,6 +60,12 @@
 
 <br /><br />
 
+## 📝 요구사항 명세서
+
+### 🔗 [Notion 링크](https://hoon95.notion.site/1adf13b39998805b9a15fafedac6966c)
+
+<br/><br/>
+
 ## 💡주요 기능
 
 <img src="/public/img/4.png">
