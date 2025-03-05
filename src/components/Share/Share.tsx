@@ -149,6 +149,14 @@ export const Youtube = () => {
     const commaString = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return commaString;
   };
+
+  const decodeHTMLEntities = (text: string) => {
+    const parser = new DOMParser();
+    const decodedString = parser.parseFromString(text, "text/html").body
+      .textContent;
+    return decodedString;
+  };
+
   return (
     <ShortList>
       {shorts.length > 0 ? (
@@ -162,7 +170,7 @@ export const Youtube = () => {
               src={video.snippet.thumbnails.medium.url}
               alt={video.snippet.title}
             />
-            <p>{video.snippet.title}</p>
+            <p>{decodeHTMLEntities(video.snippet.title)}</p>
             <div className="likeView">
               <div className="like">
                 <ThumbUpIcon />
