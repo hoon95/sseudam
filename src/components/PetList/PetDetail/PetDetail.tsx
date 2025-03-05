@@ -34,9 +34,10 @@ export const PetDetail = () => {
   const item = data[0];
 
   const handleChatAdmin = (admin: string) => {
-    setChatAdminUser(admin);
-    setIsOpen(true);
-    setOpen(true);
+    userid
+      ? (setChatAdminUser(admin), setIsOpen(true), setOpen(true))
+      : (alert("로그인이 필요한 서비스입니다."),
+        (window.location.href = "/login"));
   };
 
   const NoticeDetail = () => {
