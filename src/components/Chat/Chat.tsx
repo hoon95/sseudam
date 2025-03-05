@@ -27,49 +27,50 @@ const ChatList = () => {
   const [adminName, setAdminName] = useState("");
   const [chatList, setChatList] = useState<string[]>([]);
   const [user, setUser] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadMessages = async () => {
-      getAllUser().then((res: any) => setEntireUser(res.users));
+      setIsLoading(true);
 
-      const { user } = await getCurrentUser();
-      const userId = user.id;
-      setUser(userId);
+      try {
+        getAllUser().then((res: any) => setEntireUser(res.users));
 
-      const { adminUser } = await getAdminUser();
-      const isAdmin = adminUser.some(
-        (admin: { id: any }) => admin.id === user.id,
-      );
-      const matchingAdmin = adminUser.find(
-        (admin: { id: any }) => admin.id === user.id,
-      );
+        const { user } = await getCurrentUser();
+        const userId = user.id;
+        setUser(userId);
 
-      setAdmin(isAdmin);
+        const { adminUser } = await getAdminUser();
+        const isAdmin = adminUser.some(
+          (admin: { id: any }) => admin.id === user.id,
+        );
+        const matchingAdmin = adminUser.find(
+          (admin: { id: any }) => admin.id === user.id,
+        );
 
-      if (admin) {
-        setAdminName(matchingAdmin.center);
+        setAdmin(isAdmin);
 
-        const fetchedMessages = await fetchMessage(`${matchingAdmin.center}%`);
+        let fetchedMessages = [];
+        if (isAdmin) {
+          setAdminName(matchingAdmin.center);
+          fetchedMessages = await fetchMessage(`${matchingAdmin.center}%`);
+        } else {
+          fetchedMessages = await fetchMessage(`%${userId}`);
+        }
+
         const roomIds = fetchedMessages.map(
           (messages: { room_id: string }) => messages.room_id,
         );
         const uniqueRoomIds = [...new Set(roomIds)] as string[];
         const roomNames = uniqueRoomIds.map((roomId: string) =>
-          roomId.split("-").slice(1).join("-"),
+          isAdmin ? roomId.split("-").slice(1).join("-") : roomId.split("-")[0],
         );
 
         setChatList(roomNames);
-      } else {
-        const fetchedMessages = await fetchMessage(`%${userId}`);
-        const roomIds = fetchedMessages.map(
-          (messages: { room_id: string }) => messages.room_id,
-        );
-        const uniqueRoomIds = [...new Set(roomIds)] as string[];
-        const roomNames = uniqueRoomIds.map(
-          (roomId: string) => roomId.split("-")[0],
-        );
-
-        setChatList(roomNames);
+      } catch (error) {
+        console.error("Error loading messages:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -99,7 +100,11 @@ const ChatList = () => {
       <div className="room">
         {chatList.length === 0 ? (
           <div className="loading">
-            <CircularProgress />
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <p>아직 생성된 채팅방이 없어요!</p>
+            )}
           </div>
         ) : (
           chatList.map((room, index) => (
@@ -128,6 +133,7 @@ export const Chat = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [currentAdmin, setCurrentAdmin] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
@@ -169,11 +175,19 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-    setMessages([]);
-
     const loadMessages = async () => {
-      const fetchedMessages = await fetchMessage(chatAdmin);
-      setMessages(fetchedMessages);
+      setIsLoading(true);
+
+      try {
+        setMessages([]);
+
+        const fetchedMessages = await fetchMessage(chatAdmin);
+        setMessages(fetchedMessages);
+      } catch (error) {
+        console.error("Error loading messages:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     loadMessages();
@@ -256,7 +270,7 @@ export const Chat = () => {
             </div>
             {messages.length === 0 ? (
               <div className="messageLoading">
-                <CircularProgress />
+                {isLoading ? <CircularProgress /> : <p>채팅을 시작해보세요!</p>}
               </div>
             ) : (
               <div className="msgContainer" ref={messageContainerRef}>

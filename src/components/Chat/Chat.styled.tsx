@@ -13,10 +13,6 @@ export const Chatroom = styled.div`
   flex-direction: column;
   align-items: center;
 
-  & .title {
-    /* margin-bottom: calc(var(--gap) * 0.3); */
-  }
-
   & .room {
     width: 90%;
     height: 80%;
@@ -32,6 +28,13 @@ export const Chatroom = styled.div`
       padding: calc(var(--gap) * 0.5);
       margin-bottom: calc(var(--gap) * 0.4);
       cursor: pointer;
+    }
+
+    & .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80%;
     }
   }
 `;
