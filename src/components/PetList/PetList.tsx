@@ -3,6 +3,7 @@ import { List, EmptyList } from "./PetList.styled";
 import { Link } from "react-router-dom";
 import { memo } from "react";
 import avatar from "@assets/images/search/avatar.png";
+import placeholder from "@assets/images/search/placeholder.png";
 
 interface PetType {
   desertion_no: number;
@@ -26,7 +27,7 @@ export const PetList = memo(({ data }: PetListProps) => {
         data.map((item) => (
           <Card variant="outlined" className="card" key={item.desertion_no}>
             <Link to={`./detail/${item.desertion_no}`}>
-              <img src={item.popfile} alt="유기동물 사진" />
+              <img src={item.popfile || placeholder} alt="유기동물 사진" />
               <CardContent>
                 <Typography className="text">
                   <p>
