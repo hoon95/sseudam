@@ -1,8 +1,23 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import viteImagemin from "vite-plugin-imagemin";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    viteImagemin({
+      mozjpeg: {
+        quality: 75,
+      },
+      pngquant: {
+        quality: [0.65, 0.8],
+        speed: 4,
+      },
+      webp: {
+        quality: 75,
+      },
+    }),
+  ],
   resolve: {
     alias: [
       { find: "@", replacement: "/src" },
