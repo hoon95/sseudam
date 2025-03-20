@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ChatIcon from "@assets/images/home/chat.png";
+import ChatIcon from "@assets/images/dist/chat.webp";
 
 const ChatList = () => {
   const {

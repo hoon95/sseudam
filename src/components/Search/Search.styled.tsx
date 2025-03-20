@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import banner from "@assets/images/home/banner.png";
+import banner from "@assets/images/dist/banner.webp";
 
 export const Banner = styled.div`
   position: relative;

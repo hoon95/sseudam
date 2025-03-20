@@ -8,7 +8,7 @@ import {
   Personality,
 } from "./Inner.styled";
 import { KakaoIcon } from "@components/Login/Login.styled";
-import banner from "@assets/images/home/banner.png";
+import banner from "@assets/images/dist/banner.webp";
 import { Box, Typography, Button, Avatar, LinearProgress } from "@mui/material";
 
 export const Inner = () => {

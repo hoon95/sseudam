@@ -1,7 +1,7 @@
 import Typewriter from "typewriter-effect";
 import { ButtonModal } from "@components/Modal/Modal";
 import { Container } from "./Test.styled";
-import capture from "@assets/images/test/capture.png";
+import capture from "@assets/images/dist/capture.webp";
 
 export const Test = () => {
   return (

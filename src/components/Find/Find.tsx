@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
-import dogImage from "@assets/images/home/dog.png";
-import catImage from "@assets/images/home/cat.png";
+import dogImage from "@assets/images/dist/dog.webp";
+import catImage from "@assets/images/dist/cat.webp";
 import { Container, Kind } from "./Find.styled";
 import { useFilterStore } from "@store/store";
 
