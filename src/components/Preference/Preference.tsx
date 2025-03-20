@@ -1,7 +1,7 @@
 import Typewriter from "typewriter-effect";
 import { ButtonModal } from "@components/Modal/Modal";
 import { Container, Thumbnail, Cursor, Prefer } from "./Preference.styled";
-import thumbnail from "@assets/images/home/thumbnail.png";
+import thumbnail from "@assets/images/dist/thumbnail.webp";
 
 export const Preference = () => {
   return (

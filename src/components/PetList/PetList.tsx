@@ -2,8 +2,8 @@ import { Card, CardContent, Typography, Avatar } from "@mui/material";
 import { List, EmptyList } from "./PetList.styled";
 import { Link } from "react-router-dom";
 import { memo } from "react";
-import avatar from "@assets/images/search/avatar.png";
-import placeholder from "@assets/images/search/placeholder.png";
+import avatar from "@assets/images/dist/avatar.webp";
+import placeholder from "@assets/images/dist/placeholder.webp";
 
 interface PetType {
   desertion_no: number;
