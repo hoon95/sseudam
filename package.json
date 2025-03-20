@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node src/utils/convertImg.js",
+    "build": "tsc -b && node src/utils/convertImg.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "fetch-pet-data": "node ./src/apis/fetch.js"
