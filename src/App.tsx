@@ -1,37 +1,82 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePage } from "@pages/HomePage";
-import { SearchPage } from "@pages/SearchPage";
-import { SharePage } from "@pages/SharePage";
-import { LoginPage } from "@pages/LoginPage";
-import { Test } from "@components/Test/Test";
-import { Chat } from "@components/Chat/Chat";
-import { Header } from "@components/common/Header/Header";
-import { Footer } from "@components/common/Footer/Footer";
-import { AdminLogin, AdminSignUp } from "@components/Login/Admin/Admin";
-import { PetDetail } from "@components/PetList/PetDetail/PetDetail";
 import { GlobalStyle } from "@styles/GlobalStyle";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { lazy, Suspense } from "react";
 
 const queryClient = new QueryClient();
+
+const HomePage = lazy(() =>
+  import("@pages/HomePage").then((module) => ({
+    default: module.HomePage,
+  })),
+);
+const SearchPage = lazy(() =>
+  import("@pages/SearchPage").then((module) => ({
+    default: module.SearchPage,
+  })),
+);
+const SharePage = lazy(() =>
+  import("@pages/SharePage").then((module) => ({
+    default: module.SharePage,
+  })),
+);
+const LoginPage = lazy(() =>
+  import("@pages/LoginPage").then((module) => ({
+    default: module.LoginPage,
+  })),
+);
+const Test = lazy(() =>
+  import("@components/Test/Test").then((module) => ({
+    default: module.Test,
+  })),
+);
+const Chat = lazy(() =>
+  import("@components/Chat/Chat").then((module) => ({
+    default: module.Chat,
+  })),
+);
+const Header = lazy(() =>
+  import("@components/common/Header/Header").then((module) => ({
+    default: module.Header,
+  })),
+);
+const Footer = lazy(() =>
+  import("@components/common/Footer/Footer").then((module) => ({
+    default: module.Footer,
+  })),
+);
+const AdminLogin = lazy(() =>
+  import("@components/Login/Admin/Admin").then((module) => ({
+    default: module.AdminLogin,
+  })),
+);
+const AdminSignUp = lazy(() =>
+  import("@components/Login/Admin/Admin").then((module) => ({
+    default: module.AdminSignUp,
+  })),
+);
+const PetDetail = lazy(() => import("@components/PetList/PetDetail/PetDetail"));
 
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <GlobalStyle />
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/login/admin" element={<AdminLogin />}></Route>
-          <Route path="/login/admin/signup" element={<AdminSignUp />}></Route>
-          <Route path="/search" element={<SearchPage />}></Route>
-          <Route path="/search/detail/:id" element={<PetDetail />}></Route>
-          <Route path="/share" element={<SharePage />}></Route>
-          <Route path="/test" element={<Test />}></Route>
-        </Routes>
-        <Chat />
-        <Footer />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />}></Route>
+            <Route path="/login" element={<LoginPage />}></Route>
+            <Route path="/login/admin" element={<AdminLogin />}></Route>
+            <Route path="/login/admin/signup" element={<AdminSignUp />}></Route>
+            <Route path="/search" element={<SearchPage />}></Route>
+            <Route path="/search/detail/:id" element={<PetDetail />}></Route>
+            <Route path="/share" element={<SharePage />}></Route>
+            <Route path="/test" element={<Test />}></Route>
+          </Routes>
+          <Chat />
+          <Footer />
+        </Suspense>
       </BrowserRouter>
     </QueryClientProvider>
   );
