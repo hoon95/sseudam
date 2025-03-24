@@ -11,6 +11,7 @@ import { PetList } from "@components/PetList/PetList";
 import { Paging } from "@components/Paging/Paging";
 import { Skeleton } from "@mui/material";
 import { List } from "../PetList/PetList.styled";
+import { useMemo } from "react";
 
 export const Search = () => {
   const { page, setPage } = usePaginationStore();
@@ -43,15 +44,28 @@ export const Search = () => {
 
   // Pagination
   const itemsPerPage = 20;
-  let totalPages = 0;
-  let startIndex = 0;
-  let paginatedData = [];
+  // let totalPages = 0;
+  // let startIndex = 0;
+  // let paginatedData = [];
 
-  if (status === "success") {
-    totalPages = Math.ceil(data.length / itemsPerPage);
-    startIndex = (page - 1) * itemsPerPage;
-    paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
-  }
+  // if (status === "success") {
+  //   totalPages = Math.ceil(data.length / itemsPerPage);
+  //   startIndex = (page - 1) * itemsPerPage;
+  //   paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+  // }
+
+  const totalPages = useMemo(() => {
+    return status === "success" && data
+      ? Math.ceil(data.length / itemsPerPage)
+      : 0;
+  }, [data, status]);
+
+  const paginatedData = useMemo(() => {
+    if (status !== "success" || !data) return [];
+    const start = (page - 1) * itemsPerPage;
+    const result = data.slice(start, start + itemsPerPage);
+    return result;
+  }, [data, page, status]);
 
   return (
     <>
