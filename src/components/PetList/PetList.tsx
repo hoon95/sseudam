@@ -27,7 +27,15 @@ export const PetList = memo(({ data }: PetListProps) => {
         data.map((item) => (
           <Card variant="outlined" className="card" key={item.desertion_no}>
             <Link to={`./detail/${item.desertion_no}`}>
-              <img src={item.popfile || placeholder} alt="유기동물 사진" />
+              {/* <img src={item.popfile || placeholder} alt="유기동물 사진" /> */}
+              <img
+                src={item.popfile}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = placeholder;
+                }}
+                alt="유기동물 사진"
+              />
               <CardContent>
                 <Typography className="text">
                   <p>
