@@ -55,7 +55,11 @@ const AdminSignUp = lazy(() =>
     default: module.AdminSignUp,
   })),
 );
-const PetDetail = lazy(() => import("@components/PetList/PetDetail/PetDetail"));
+const PetDetail = lazy(() =>
+  import("@components/PetList/PetDetail/PetDetail").then((module) => ({
+    default: module.PetDetail,
+  })),
+);
 
 export const App = () => {
   return (
