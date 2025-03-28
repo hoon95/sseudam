@@ -5,6 +5,8 @@ import { theme } from "../src/styles/theme";
 import { GlobalStyle } from "../src/styles/GlobalStyle";
 
 const preview: Preview = {
+  // tags: ["@storybook/addon-docs"],
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>

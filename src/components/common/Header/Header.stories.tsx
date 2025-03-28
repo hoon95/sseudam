@@ -6,6 +6,13 @@ import { useUserStore } from "@store/store";
 const meta: Meta<typeof Header> = {
   title: "Common/Header",
   component: Header,
+  parameters: {
+    docs: {
+      description: {
+        component: "앱 상단에 위치하는 헤더 컴포넌트입니다.",
+      },
+    },
+  },
   decorators: [
     (Story) => {
       return (
