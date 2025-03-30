@@ -1,20 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@apis/supabase";
 import {
-  usePaginationStore,
+  // usePaginationStore,
   useFilterStore,
   useLocationStore,
 } from "@store/store";
-import { Banner, Container, PagingLeft } from "./Search.styled";
+// import { Banner, Container, PagingLeft } from "./Search.styled";
+import { Banner, Container } from "./Search.styled";
 import { Filter } from "@components/Filter/Filter";
 import { PetList } from "@components/PetList/PetList";
-import { Paging } from "@components/Paging/Paging";
+// import { Paging } from "@components/Paging/Paging";
 import { Skeleton } from "@mui/material";
 import { List } from "../PetList/PetList.styled";
-import { useMemo } from "react";
+// import { useMemo } from "react";
 
 export const Search = () => {
-  const { page, setPage } = usePaginationStore();
+  // const { page, setPage } = usePaginationStore();
   const { type, setType, gender, age, weight } = useFilterStore();
   const { selectedRegion, selectedCity } = useLocationStore();
 
@@ -43,7 +44,7 @@ export const Search = () => {
   });
 
   // Pagination
-  const itemsPerPage = 20;
+  // const itemsPerPage = 20;
   // let totalPages = 0;
   // let startIndex = 0;
   // let paginatedData = [];
@@ -54,18 +55,18 @@ export const Search = () => {
   //   paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
   // }
 
-  const totalPages = useMemo(() => {
-    return status === "success" && data
-      ? Math.ceil(data.length / itemsPerPage)
-      : 0;
-  }, [data, status]);
+  // const totalPages = useMemo(() => {
+  //   return status === "success" && data
+  //     ? Math.ceil(data.length / itemsPerPage)
+  //     : 0;
+  // }, [data, status]);
 
-  const paginatedData = useMemo(() => {
-    if (status !== "success" || !data) return [];
-    const start = (page - 1) * itemsPerPage;
-    const result = data.slice(start, start + itemsPerPage);
-    return result;
-  }, [data, page, status]);
+  // const paginatedData = useMemo(() => {
+  //   if (status !== "success" || !data) return [];
+  //   const start = (page - 1) * itemsPerPage;
+  //   const result = data.slice(start, start + itemsPerPage);
+  //   return result;
+  // }, [data, page, status]);
 
   return (
     <>
@@ -93,17 +94,18 @@ export const Search = () => {
             ))}
           </List>
         ) : (
-          <PetList data={paginatedData} type={type} age={age} weight={weight} />
+          // <PetList data={paginatedData} type={type} age={age} weight={weight} />
+          <PetList data={data} type={type} age={age} weight={weight} />
         )}
       </Container>
-      <PagingLeft>
+      {/* <PagingLeft>
         <div className="inner"></div>
         <Paging
           totalPages={totalPages}
           currentPage={page}
           onChangePage={setPage}
         />
-      </PagingLeft>
+      </PagingLeft> */}
     </>
   );
 };
