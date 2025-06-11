@@ -42,6 +42,8 @@ export const Search = () => {
       ),
   });
 
+  console.log(data);
+
   // Pagination
   const itemsPerPage = 20;
   // let totalPages = 0;

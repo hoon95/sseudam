@@ -31,45 +31,6 @@ interface PetType {
 
 dotenv.config();
 
-// export const fetchAPI = async () => {
-//   const serviceKey = import.meta.env.VITE_API_SERVICE_KEY;
-
-//   if (!serviceKey) {
-//     throw new Error("서비스 키가 설정되지 않았습니다. 환경 변수를 확인하세요.");
-//   }
-
-//   try {
-//     const { data } = await axios.get(
-//       "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu",
-//       {
-//         params: {
-//           serviceKey,
-//           upr_cd: 6500000,
-//           _type: "json",
-//         },
-//       },
-//     );
-
-//     const type = data.response.body.items.item;
-//     console.log(type);
-//   } catch (error) {
-//     if (axios.isAxiosError(error) && error.response) {
-//       if (error.response.status === 429) {
-//         console.log("트래픽 초과. 잠시 후 다시 시도해주세요.");
-//       } else {
-//         console.error(
-//           "API 요청 오류:",
-//           error.response.status,
-//           error.response.statusText,
-//         );
-//       }
-//     } else {
-//       console.error("알 수 없는 오류:", error);
-//     }
-//     throw error;
-//   }
-// };
-
 const supabaseUrl = process.env.VITE_SUPABASE_URL as string;
 const supabaseKey = process.env.VITE_SERVICE_ROLE as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -83,7 +44,7 @@ export const fetchPetData = async () => {
 
   try {
     const { data } = await axios.get(
-      "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic",
+      "http://apis.data.go.kr/1543061/abandonmentPublicService_v2/abandonmentPublic_v2",
       {
         params: {
           serviceKey,
@@ -110,8 +71,8 @@ export const fetchPetData = async () => {
         const type = kindCd.includes("개")
           ? "강아지"
           : kindCd.includes("고양이")
-          ? "고양이"
-          : "기타";
+            ? "고양이"
+            : "기타";
         const kind = kindCd.replace(/\[.*?\]\s*/, "").trim();
         const ageMatch = pet.age.match(/^(\d{4})/);
         const ageYear = ageMatch ? parseInt(ageMatch[1], 10) : null;
