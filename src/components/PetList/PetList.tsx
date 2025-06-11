@@ -10,7 +10,7 @@ interface PetType {
   popfile: string;
   notice_sdt: string;
   notice_edt: string;
-  kind_cd: string;
+  upKindNm: string;
   sex_cd: string;
   calculated_age: string;
   calculated_weight: string;
@@ -41,7 +41,7 @@ export const PetList = memo(({ data }: PetListProps) => {
                   <p>
                     공고날짜: {item.notice_sdt} - {item.notice_edt}
                   </p>
-                  <p>품종: {item.kind_cd}</p>
+                  <p>품종: {item.upKindNm}</p>
                   <p>나이: {item.calculated_age}세</p>
                   <p>
                     성별:{" "}

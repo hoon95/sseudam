@@ -8,7 +8,7 @@ interface PetType {
   filename: string;
   happenDt: number;
   happenPlace: string;
-  kindCd: string;
+  upKindNm: string;
   colorCd: string;
   age: string;
   weight: string;
@@ -67,13 +67,6 @@ export const fetchPetData = async () => {
       }
 
       for (const pet of pets) {
-        const kindCd = pet.kindCd;
-        const type = kindCd.includes("개")
-          ? "강아지"
-          : kindCd.includes("고양이")
-            ? "고양이"
-            : "기타";
-        const kind = kindCd.replace(/\[.*?\]\s*/, "").trim();
         const ageMatch = pet.age.match(/^(\d{4})/);
         const ageYear = ageMatch ? parseInt(ageMatch[1], 10) : null;
         const calculatedAge = ageYear ? currentYear - ageYear : null;
@@ -88,7 +81,7 @@ export const fetchPetData = async () => {
             filename: pet.filename,
             happen_dt: pet.happenDt,
             happen_place: pet.happenPlace,
-            kind_cd: pet.kindCd,
+            upKindNm: pet.upKindNm,
             color_cd: pet.colorCd,
             age: pet.age,
             weight: pet.weight,
@@ -107,8 +100,8 @@ export const fetchPetData = async () => {
             charge_nm: pet.chargeNm,
             officetel: pet.officetel,
             notice_comment: pet.noticeComment,
-            type,
-            kind,
+            // type,
+            // kind,
             calculated_age: calculatedAge,
             calculated_weight: calculatedWeight,
           },
