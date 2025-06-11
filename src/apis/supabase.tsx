@@ -49,9 +49,9 @@ export const fetchData = async (
     let query = supabase.from(table).select("*");
 
     if (type === "dog") {
-      query = query.eq("type", "강아지");
+      query = query.eq("upKindNm", "개");
     } else if (type === "cat") {
-      query = query.eq("type", "고양이");
+      query = query.eq("upKindNm", "고양이");
     }
 
     if (gender === "all") {

@@ -180,7 +180,7 @@ export const PetDetail = () => {
               <div className="call">
                 <CallIcon />
                 <p>
-                  {item.care_tel} &nbsp;/&nbsp; {item.officetel}
+                  {item.care_tel}
                 </p>
               </div>
             </div>

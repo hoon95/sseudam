@@ -15,7 +15,7 @@ interface PetType {
   noticeNo: string;
   noticeSdt: number;
   noticeEdt: number;
-  popfile: string;
+  popfile1: string;
   processState: string;
   sexCd: string;
   neuterYn: string;
@@ -24,9 +24,10 @@ interface PetType {
   careTel: string;
   careAddr: string;
   orgNm: string;
-  chargeNm: string;
+  careOwnerNm: string;
   officetel: string;
   noticeComment: string;
+  kindNm: string;
 }
 
 dotenv.config();
@@ -88,7 +89,7 @@ export const fetchPetData = async () => {
             notice_no: pet.noticeNo,
             notice_sdt: pet.noticeSdt,
             notice_edt: pet.noticeEdt,
-            popfile: pet.popfile,
+            popfile: pet.popfile1,
             process_state: pet.processState,
             sex_cd: pet.sexCd,
             neuter_yn: pet.neuterYn,
@@ -97,11 +98,11 @@ export const fetchPetData = async () => {
             care_tel: pet.careTel,
             care_addr: pet.careAddr,
             org_nm: pet.orgNm,
-            charge_nm: pet.chargeNm,
+            charge_nm: pet.careOwnerNm,
             officetel: pet.officetel,
             notice_comment: pet.noticeComment,
             // type,
-            // kind,
+            kind: pet.kindNm,
             calculated_age: calculatedAge,
             calculated_weight: calculatedWeight,
           },
