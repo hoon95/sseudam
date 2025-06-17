@@ -21,9 +21,9 @@ interface PetListProps {
   data: PetType[];
 }
 export const PetList = memo(({ data }: PetListProps) => {
-//   const getSafeImageUrl = (url: string) => {
-//   return `/api/image-proxy?url=${encodeURIComponent(url)}`;
-// };
+  const getSafeImageUrl = (url: string) => {
+  return `/api/image-proxy?url=${encodeURIComponent(url)}`;
+};
 
 
   return (
@@ -34,8 +34,8 @@ export const PetList = memo(({ data }: PetListProps) => {
             <Link to={`./detail/${item.desertion_no}`}>
               {/* <img src={item.popfile || placeholder} alt="유기동물 사진" /> */}
               <img
-                src={item.popfile}
-                // src={getSafeImageUrl(item.popfile)}
+                // src={item.popfile}
+                src={getSafeImageUrl(item.popfile)}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = placeholder;
